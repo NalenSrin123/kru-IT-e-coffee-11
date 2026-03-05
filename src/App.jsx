@@ -1,9 +1,7 @@
-import React from 'react'
+import ForgotPassword from "./services/auth/Forgotpassword";
 
-const App = () => {
-  return (
-    <div className='text-amber-400'>App</div>
-  )
+function App() {
+  return <ForgotPassword />;
 }
 
-export default App
+export default App;
