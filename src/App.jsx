@@ -1,9 +1,12 @@
 import React from 'react'
+import Register from './services/auth/register'
 
 const App = () => {
   return (
-    <div className='text-amber-400'>App</div>
+    <div>
+      <Register />
+    </div>
   )
 }
 
-export default App
+export default App;
