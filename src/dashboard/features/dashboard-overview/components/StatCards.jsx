@@ -42,7 +42,6 @@ const StatCards = ({ data }) => {
             <div className="p-2 bg-[#F7F4E8] rounded-lg text-[#361205]">
               <card.icon size={24} weight="fill" />
             </div>
-            {/* Now the trend color can also be dynamic! */}
             <span className={`text-xs font-bold ${card.color}`}>{card.trend}</span>
           </div>
           <p className="text-gray-400 text-xs font-bold uppercase tracking-wider">{card.title}</p>

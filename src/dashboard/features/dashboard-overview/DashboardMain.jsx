@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 
-// Import Components
 import Sidebar from './components/Sidebar';
 import Topbar from './components/Topbar';
 import StatCards from './components/StatCards';
@@ -9,22 +8,17 @@ import PopularItems from './components/PopularItems';
 import RecentOrders from './components/RecentOrders';
 
 export const DashboardOverview = () => {
-  // 1. Manage mobile sidebar state
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   
-  // 2. Toggle function to open/close
   const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
 
   return (
     <div className="flex min-h-screen bg-[#F7F4E8] text-[#211B1D] font-sans overflow-hidden relative">
       
-      {/* 3. Pass state and toggle function to Sidebar */}
       <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
 
-      {/* Main Content Wrapper */}
       <main className="flex-1 flex flex-col min-w-0 overflow-hidden">
         
-        {/* 4. Pass toggle function to Topbar (for hamburger button) */}
         <Topbar toggleSidebar={toggleSidebar} />
 
         {/* Main Content Area */}
@@ -46,6 +40,7 @@ export const DashboardOverview = () => {
             <PopularItems />
           </div>
 
+          {/* Bottom Section */}
           <RecentOrders />
 
         </div>
