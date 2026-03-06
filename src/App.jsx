@@ -1,9 +1,7 @@
-import React from 'react'
+import GetOtpInEmail from "./services/auth/GetOtpInEmail";
 
-const App = () => {
-  return (
-    <div className='text-amber-400'>App</div>
-  )
+function App() {
+  return <GetOtpInEmail />;
 }
 
-export default App
+export default App;
