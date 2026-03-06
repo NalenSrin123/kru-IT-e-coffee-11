@@ -1,8 +1,11 @@
 import React from 'react'
+import Login from './utils/Login'
 
 const App = () => {
   return (
-    <div className='text-amber-400'>App</div>
+    <div>
+      <Login/>
+    </div>
   )
 }
 
