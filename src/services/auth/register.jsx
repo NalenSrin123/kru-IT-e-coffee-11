@@ -94,7 +94,7 @@ export default function Register() {
           >
             Register
           </button>
-
+          
         </form>
 
         <p className="text-sm text-center mt-4">
@@ -106,7 +106,6 @@ export default function Register() {
 
       </div>
       
-
     </div>
   );
 }
