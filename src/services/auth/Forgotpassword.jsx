@@ -1,5 +1,5 @@
 import React from "react";
-import "./ForgotPassword.css";
+// import "./ForgotPassword.css";
 function ForgotPassword() {
   return (
     <div className="forgot-container">
