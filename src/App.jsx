@@ -12,6 +12,7 @@ import { DashboardOverview } from './dashboard/features/dashboard-overview/Dashb
 import CustomerLists from './dashboard/features/a2-tables-filters-ux/confirmation-modals/Customerlists'
 import HeroSection from './components/public/home/HeroSection'
 import Design_Top_Product from './components/public/home/Design_Top_Product'
+import Navbar from './components/Navbar'
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
       <HeroSection/>
       <Design_Top_Product/>
       <Register />
+      <Navbar/>
     </div>
   )
 }
