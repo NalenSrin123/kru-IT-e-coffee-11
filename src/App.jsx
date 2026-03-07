@@ -1,17 +1,14 @@
+
 import {BrowserRouter, Routes, Route} from "react-router-dom"
 import React from 'react'
-import Sidebar from './dashboard/features/Sidebar/sidebar';
+import Design_UI_get_reset_password_in_email from './services/auth/Design_UI_get_reset_password_in_email'
 
-const App = () => {
+function App() {
   return (
-    <div className='flex'>
-      <Sidebar />
-      <main className='flex-1 p-6'>
-        <h1 className='text-2xl font-bold text-gray-900'>Dashboard</h1>
-        <p className='text-gray-600'>Welcome to the E-Coffee Admin Dashboard</p>
-      </main>
+    <div>
+      <Design_UI_get_reset_password_in_email/>
     </div>
   )
 }
 
-export default App;
+export default App
