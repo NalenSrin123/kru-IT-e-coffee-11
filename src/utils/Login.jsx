@@ -20,13 +20,11 @@ function Login() {
           placeholder="Password"
           className="w-full border p-2 md:p-3 rounded mt-4 mb-2"
         />
-
         <div className="flex justify-between items-center mt-2 mb-3 text-sm">
           <div className="flex gap-2 items-center">
             <input type="checkbox" />
             <label>Remember for 30 day</label>
           </div>
-
           <h1 className="text-blue-600 underline cursor-pointer">
             Forgot password
           </h1>
