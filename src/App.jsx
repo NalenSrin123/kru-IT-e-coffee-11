@@ -1,9 +1,6 @@
-import React from 'react'
+
 import Login from './utils/Login'
-
 import Register from './services/auth/register'
-
-
 import React from 'react'
 import Design_UI_get_reset_password_in_email from './services/auth/Design_UI_get_reset_password_in_email'
 import ResetPassword from './services/auth/Comfirm_rest_pw'
