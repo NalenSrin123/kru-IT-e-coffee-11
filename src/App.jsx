@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
@@ -30,6 +31,18 @@ function App() {
         Click on the Vite and React logos to learn more
       </p>
     </>
+=======
+
+import {BrowserRouter, Routes, Route} from "react-router-dom"
+import React from 'react'
+import Design_UI_get_reset_password_in_email from './services/auth/Design_UI_get_reset_password_in_email'
+
+function App() {
+  return (
+    <div>
+      <Design_UI_get_reset_password_in_email/>
+    </div>
+>>>>>>> 6a4c7f8da5f54231ac5e9b1898a6748443be58bd
   )
 }
 
