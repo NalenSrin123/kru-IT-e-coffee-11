@@ -1,11 +1,14 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function Register() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
-    confirmPassword: ""
+    
   });
 
   const handleChange = (e) => {
@@ -18,7 +21,7 @@ export default function Register() {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(formData);
-    alert("Register Successful");
+    navigate("/login")
   };
 
   return (
@@ -41,9 +44,7 @@ export default function Register() {
               name="name"
               placeholder="Enter your name"
               onChange={handleChange}
-              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-              required
-            />
+              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" required />
           </div>
 
           <div>
@@ -78,20 +79,18 @@ export default function Register() {
 
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition"
-          >
-            Register
+            className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition">
+           Register
           </button>
           
         </form>
 
         <p className="text-sm text-center mt-4">
           Already have an account? 
-          <span className="text-blue-500 cursor-pointer ml-1">
-            Login
-          </span>
-        </p>
+           <Link className="text-blue-500 cursor-pointer ml-1 underline" to={"/login"}> Login</Link> 
 
+        </p>
+        
       </div>
       
     </div>
