@@ -14,10 +14,15 @@ import CustomerLists from './dashboard/features/a2-tables-filters-ux/confirmatio
 import HeroSection from './components/public/home/HeroSection'
 import Design_Top_Product from './components/public/home/Design_Top_Product'
 import Navbar from './components/Navbar'
+<<<<<<< HEAD
 import { Routes,Route } from 'react-router-dom'
+=======
+import Footer from './components/common/Footer'
+>>>>>>> 104a3baa2b8c2e17e17423611944b7fea3956ace
 
 const App = () => {
   return (
+<<<<<<< HEAD
     <Routes>
         <Route path='/' element={<Register></Register>}></Route>
         <Route path='/register' element={<Register></Register>}></Route>
@@ -25,6 +30,16 @@ const App = () => {
          <Route path='/GetOtpInEmail' element={<GetOtpInEmail/>}></Route>
         <Route path='/resetpassword' element={<ResetPassword/>}></Route>
          <Route path='/otpdesign' element={<OtpDesign/>}></Route>
+=======
+    <div>
+      <Navbar/>
+      <HeroSection/>     
+      <Design_Top_Product/>
+      <Footer/>
+    </div>
+  )
+}
+>>>>>>> 104a3baa2b8c2e17e17423611944b7fea3956ace
 
 
       </Routes>

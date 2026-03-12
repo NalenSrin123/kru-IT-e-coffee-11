@@ -16,7 +16,11 @@
     "react": "^19.2.0",
     "react-chartjs-2": "^5.3.1",
     "react-dom": "^19.2.0",
+<<<<<<< HEAD
     "react-router-dom": "^7.13.1",
+=======
+    "react-icons": "^5.6.0",
+>>>>>>> 104a3baa2b8c2e17e17423611944b7fea3956ace
     "react-simple-typewriter": "^5.0.1"
   },
   "devDependencies": {
