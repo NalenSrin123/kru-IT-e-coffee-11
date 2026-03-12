@@ -1,6 +1,9 @@
 import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Register() {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -14,16 +17,16 @@ export default function Register() {
       [e.target.name]: e.target.value
     });
   };
-  
+
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(formData);
     alert("Register Successful");
+    navigate("/login");
   };
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-300">
-      
       <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-lg">
         
         <h2 className="text-2xl font-bold text-center mb-6">
@@ -74,7 +77,19 @@ export default function Register() {
             />
           </div>
 
-
+          <div>
+            <label className="block text-sm font-medium mb-1">
+              Confirm Password
+            </label>
+            <input
+              type="password"
+              name="confirmPassword"
+              placeholder="Confirm password"
+              onChange={handleChange}
+              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+              required
+            />
+          </div>
 
           <button
             type="submit"
@@ -82,18 +97,17 @@ export default function Register() {
           >
             Register
           </button>
-          
+
         </form>
 
         <p className="text-sm text-center mt-4">
-          Already have an account? 
-          <span className="text-blue-500 cursor-pointer ml-1">
+          Already have an account?
+          <Link className="text-blue-500 ml-1 underline" to="/login">
             Login
-          </span>
+          </Link>
         </p>
 
       </div>
-      
     </div>
   );
 }
