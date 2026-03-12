@@ -16,8 +16,6 @@ import Navbar from './components/Navbar'
 import Footer from './components/common/Footer'
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <div>
       <Navbar/>
@@ -29,3 +27,4 @@ function App() {
 }
 
 export default App
+

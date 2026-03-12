@@ -13,19 +13,28 @@ import CustomerLists from './dashboard/features/a2-tables-filters-ux/confirmatio
 import HeroSection from './components/public/home/HeroSection'
 import Design_Top_Product from './components/public/home/Design_Top_Product'
 import Navbar from './components/Navbar'
-import Footer from './components/common/Footer'
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <div>
-      <Navbar/>
-      <HeroSection/>     
-      <Design_Top_Product/>
-      <Footer/>
+        <Navbar/>
+        <HeroSection/>
+        <Design_Top_Product/>
+
+
+      {/* <ForgotPassword/> */}
+      <GetOtpInEmail/>
+      <OtpDesign/>
+      {/* <Sidebar/> */}
+      <DashboardOverview/>
+      <CustomerLists/>
+
+
+
+
     </div>
   )
 }
 
 export default App
+
