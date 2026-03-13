@@ -14,6 +14,7 @@ import HeroSection from './components/public/home/HeroSection'
 import Design_Top_Product from './components/public/home/Design_Top_Product'
 import Navbar from './components/Navbar'
 import Footer from './components/common/Footer'
+import MenuManagement from './dashboard/features/a1-core-crud-forms/crud-menu-coffee'
 
 function App() {
   return (
@@ -22,6 +23,8 @@ function App() {
       <HeroSection/>     
       <Design_Top_Product/>
       <Footer/>
+      <DashboardOverview/>
+      <MenuManagement/>
     </div>
   )
 }
