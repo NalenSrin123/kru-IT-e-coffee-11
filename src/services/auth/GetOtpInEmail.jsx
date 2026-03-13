@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import { Link } from "react-router-dom";
 const GetOtpInEmail = () => {
   const [email, setEmail] = useState("");
   const [otpSent, setOtpSent] = useState(false);
@@ -17,7 +17,7 @@ const GetOtpInEmail = () => {
 
   const handleVerify = () => {
     console.log("OTP entered:", otp);
-    alert("OTP Verified (Demo)");
+   
   };
 
   return (
@@ -57,12 +57,14 @@ const GetOtpInEmail = () => {
               value={otp}
               onChange={(e) => setOtp(e.target.value)}
             />
-
             <button
               onClick={handleVerify}
               className="w-full bg-green-500 text-white p-3 rounded-lg hover:bg-green-600 transition"
             >
+              <Link to={"/resetpassword"} >
               Verify OTP
+              </Link>
+              
             </button>
           </>
         )}
