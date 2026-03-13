@@ -21,7 +21,9 @@ function App() {
       <Navbar/>
       <HeroSection/>     
       <Design_Top_Product/>
-      <Footer/>
+      <Footer
+
+      
     </div>
   )
 }

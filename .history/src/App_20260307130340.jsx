@@ -13,15 +13,26 @@ import CustomerLists from './dashboard/features/a2-tables-filters-ux/confirmatio
 import HeroSection from './components/public/home/HeroSection'
 import Design_Top_Product from './components/public/home/Design_Top_Product'
 import Navbar from './components/Navbar'
-import Footer from './components/common/Footer'
 
 function App() {
   return (
     <div>
-      <Navbar/>
-      <HeroSection/>     
-      <Design_Top_Product/>
-      <Footer/>
+        <Navbar/>
+        <HeroSection/>
+        
+      <Login/>
+      <Design_UI_get_reset_password_in_email/>
+      <ResetPassword/>
+      {/* <ForgotPassword/> */}
+      <GetOtpInEmail/>
+      <OtpDesign/>
+      {/* <Sidebar/> */}
+      <DashboardOverview/>
+      <CustomerLists/>
+
+
+
+
     </div>
   )
 }
