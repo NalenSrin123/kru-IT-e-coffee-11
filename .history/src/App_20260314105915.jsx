@@ -18,15 +18,13 @@ import { Routes,Route } from 'react-router-dom'
 
 const App = () => {
   return (
-    <div>
-      <h1>Prepare home page</h1>
-      <Navbar/>
-      <HeroSection/>     
-      <Design_Top_Product/>
-      <Footer/>
-    </div>
-  )
-}
+    <Routes>
+        <Route path='/' element={<Register></Register>}></Route>
+        <Route path='/register' element={<Register></Register>}></Route>
+        <Route path='/login' element={<Login/>}> </Route>
+        <Route path='/GetOtpInEmail' element={<GetOtpInEmail/>}></Route>
+        <Route path='/resetpassword' element={<ResetPassword/>}></Route>
+        <Route path='/otpdesign' element={<OtpDesign/>}></Route>
 
 
       </Routes>
