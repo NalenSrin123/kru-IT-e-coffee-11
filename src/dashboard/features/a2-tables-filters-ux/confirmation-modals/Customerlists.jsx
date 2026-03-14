@@ -1,18 +1,43 @@
 import React, { useState, useMemo } from 'react';
-import { Search, Plus, ChevronDown } from 'lucide-react';
+import { 
+  Search, ChevronDown, X, Mail, Phone, 
+  Award, Save, Edit2, Eye 
+} from 'lucide-react';
 
 const CustomerLists = () => {
-  // 1. Data Source
-  const initialCustomers = [
+  // 1. Data State
+  const [customers, setCustomers] = useState([
     { id: 1, name: "Liam Brown", email: "liam.b@email.com", phone: "(555) 123-4567", date: "2023-11-05", status: "ACTIVE", points: 1250 },
-    { id: 2, name: "Ava Smith", email: "ava.s@email.com", phone: "(555) 234-5678", date: "2023-10-12", status: "ACTIVE", points: 980 },
-    { id: 3, name: "Liana Broth", email: "liam.b@email.com", phone: "(555) 123-4567", date: "2023-11-05", status: "ACTIVE", points: 980 },
-    { id: 4, name: "Mava Smith", email: "avar.a@email.com", phone: "(555) 123-4567", date: "2023-11-04", status: "ACTIVE", points: 980 },
-    { id: 5, name: "Liam Brown", email: "liam.b@email.com", phone: "(555) 123-4567", date: "2023-11-05", status: "ACTIVE", points: 1250 },
-    { id: 6, name: "Ava Smith", email: "ava.s@email.com", phone: "(555) 234-5678", date: "2023-10-12", status: "INACTIVE", points: 980 },
-    { id: 7, name: "Liana Broth", email: "liam.b@email.com", phone: "(555) 123-4567", date: "2023-11-05", status: "ACTIVE", points: 980 },
-    { id: 8, name: "Mava Smith", email: "avar.a@email.com", phone: "(555) 123-4567", date: "2023-11-04", status: "INACTIVE", points: 980 },
-  ];
+    { id: 2, name: "Ava Smith", email: "ava.s@email.com", phone: "(555) 234-5678", date: "2023-10-12", status: "INACTIVE", points: 980 },
+    { id: 3, name: "Liana Broth", email: "liana.b@email.com", phone: "(555) 123-4567", date: "2023-11-05", status: "ACTIVE", points: 980 },
+    { id: 4, name: "Mava Smith", email: "mava.s@email.com", phone: "(555) 123-4567", date: "2023-11-04", status: "ACTIVE", points: 980 },
+    { id: 5, name: "Noah Wilson", email: "noah.w@email.com", phone: "(555) 987-6543", date: "2023-12-01", status: "INACTIVE", points: 450 },
+  ]);
+
+  // 2. UI State
+  const [searchTerm, setSearchTerm] = useState("");
+  const [statusFilter, setStatusFilter] = useState("All");
+  const [currentPage, setCurrentPage] = useState(1); // Added missing state
+  const [viewingCustomer, setViewingCustomer] = useState(null);
+  const [editingCustomer, setEditingCustomer] = useState(null);
+
+  // 3. Filtering Logic
+  const filteredCustomers = useMemo(() => {
+    return customers.filter((customer) => {
+      const matchesSearch = 
+        customer.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        customer.email.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchesStatus = statusFilter === "All" || customer.status === statusFilter.toUpperCase();
+      return matchesSearch && matchesStatus;
+    });
+  }, [searchTerm, statusFilter, customers]);
+
+  // 4. Action Handlers
+  const handleSaveEdit = (e) => {
+    e.preventDefault();
+    setCustomers(customers.map(c => c.id === editingCustomer.id ? editingCustomer : c));
+    setEditingCustomer(null);
+  };
 
   // 2. State for Search and Filter
   const [searchTerm, setSearchTerm] = useState("");
@@ -34,146 +59,252 @@ const CustomerLists = () => {
   }, [searchTerm, statusFilter]);
 
   return (
-    <div className="p-2 md:p-3 min-h-screen font-sans text-[#2D241E]">
+    <div className="p-4 md:p-8 bg-[#F9F6F2] min-h-screen font-sans text-[#2D241E]">
       <div className="max-w-6xl mx-auto">
         
-        {/* Header Section */}
         <header className="mb-6 md:mb-8">
-          <h1 className="text-2xl md:text-3xl font-bold text-[#361205]">Customer Lists</h1>
-          <p className="text-sm text-stone-500 mt-1">Manage and track your customer base efficiently.</p>
+          <h1 className="text-2xl md:text-3xl font-bold mb-1 text-[#2D1B14]">Customer Lists</h1>
+          <p className="text-stone-500 text-xs md:text-sm">Manage and update customer profiles</p>
         </header>
 
-        {/* Toolbar - Responsive Layout */}
-        <div className="flex flex-col lg:flex-row items-stretch lg:items-end gap-4 mb-6">
-          
-          {/* Search Input */}
+        {/* --- TOOLBAR --- */}
+        <div className="flex flex-col md:flex-row items-stretch md:items-end gap-4 mb-6">
           <div className="flex-1">
-            <label className="block text-xs font-bold uppercase tracking-wider text-stone-400 mb-1.5">Search</label>
+            <label className="block text-xs font-bold mb-1.5 text-stone-600 uppercase tracking-wider">Search</label>
             <div className="relative">
               <input 
                 type="text" 
-                placeholder="Search name, email, phone..." 
+                placeholder="Name or email..." 
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-4 pr-10 py-2.5 bg-white border border-stone-200 rounded-xl focus:ring-2 focus:ring-[#361205]/10 focus:border-[#361205] outline-none transition-all text-sm shadow-sm"
+                className="w-full pl-4 pr-10 py-3 md:py-2 border border-stone-300 rounded-xl md:rounded-lg focus:ring-2 focus:ring-[#2D1B14] outline-none transition-all bg-white"
               />
-              <Search className="absolute right-3 top-2.5 text-stone-400 w-5 h-5" />
+              <Search className="absolute right-3 top-3.5 md:top-2.5 text-gray-400 w-5 h-5" />
             </div>
           </div>
 
-          {/* Filter and Add Button Row */}
-          <div className="flex flex-row items-end gap-3">
-            <div className="flex-1 lg:flex-none">
-              <label className="block text-xs font-bold uppercase tracking-wider text-stone-400 mb-1.5">Status</label>
-              <div className="relative">
-                <select 
-                  value={statusFilter}
-                  onChange={(e) => setStatusFilter(e.target.value)}
-                  className="w-full min-w-[140px] appearance-none bg-white border border-stone-200 rounded-xl pl-4 pr-10 py-2.5 outline-none cursor-pointer text-sm shadow-sm focus:border-[#361205]"
-                >
-                  <option value="All">All Customers</option>
-                  <option value="Active">Active</option>
-                  <option value="Inactive">Inactive</option>
-                </select>
-                <ChevronDown className="absolute right-3 top-2.5 text-stone-400 w-5 h-5 pointer-events-none" />
-              </div>
+          <div className="w-full md:w-48">
+            <label className="block text-xs font-bold mb-1.5 text-stone-600 uppercase tracking-wider">Status</label>
+            <div className="relative">
+              <select 
+                value={statusFilter}
+                onChange={(e) => setStatusFilter(e.target.value)}
+                className="appearance-none w-full bg-white border border-stone-300 rounded-xl md:rounded-lg pl-4 pr-10 py-3 md:py-2 outline-none cursor-pointer"
+              >
+                <option value="All">All Status</option>
+                <option value="Active">Active</option>
+                <option value="Inactive">Inactive</option>
+              </select>
+              <ChevronDown className="absolute right-3 top-3.5 md:top-2.5 text-gray-400 w-5 h-5 pointer-events-none" />
             </div>
-
-            <button className="flex-1 lg:flex-none bg-[#361205] text-white px-5 py-2.5 rounded-xl font-bold text-sm flex items-center justify-center gap-2 hover:bg-[#4d1a08] transition-all shadow-md active:scale-95">
-              <Plus className="w-5 h-5" />
-              <span className="whitespace-nowrap">Add New</span>
-            </button>
           </div>
         </div>
 
-        {/* Table Container */}
-        <div className="bg-white border border-stone-200 rounded-2xl shadow-sm overflow-hidden">
-          <div className="overflow-x-auto">
-            <table className="w-full text-left min-w-[800px]">
-              <thead className="bg-stone-50/50 border-b border-stone-100">
-                <tr>
-                  <th className="px-6 py-4 text-[11px] font-bold text-stone-400 uppercase tracking-widest">Customer</th>
-                  <th className="px-6 py-4 text-[11px] font-bold text-stone-400 uppercase tracking-widest">Contact Info</th>
-                  <th className="px-6 py-4 text-[11px] font-bold text-stone-400 uppercase tracking-widest text-center">Date Joined</th>
-                  <th className="px-6 py-4 text-[11px] font-bold text-stone-400 uppercase tracking-widest text-center">Status</th>
-                  <th className="px-6 py-4 text-[11px] font-bold text-stone-400 uppercase tracking-widest text-right">Actions</th>
+        {/* --- DESKTOP TABLE VIEW --- */}
+        <div className="hidden md:block bg-white border border-stone-200 rounded-xl shadow-sm overflow-hidden">
+          <table className="w-full text-left border-collapse">
+            <thead className="bg-stone-50 border-b border-stone-100">
+              <tr>
+                <th className="px-6 py-4 font-semibold text-stone-600">Customer</th>
+                <th className="px-6 py-4 font-semibold text-stone-600">Email</th>
+                <th className="px-6 py-4 font-semibold text-stone-600 text-center">Status</th>
+                <th className="px-6 py-4 font-semibold text-stone-600 text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-stone-100">
+              {filteredCustomers.map((c) => (
+                <tr key={c.id} className="hover:bg-stone-50 transition-colors">
+                  <td className="px-6 py-4 flex items-center gap-3">
+                    <img className="w-10 h-10 rounded-full border border-stone-200" src={`https://ui-avatars.com/api/?name=${c.name}&background=random`} alt="" />
+                    <span className="font-bold text-[#2D1B14]">{c.name}</span>
+                  </td>
+                  <td className="px-6 py-4 text-gray-600">{c.email}</td>
+                  <td className="px-6 py-4 text-center">
+                    <StatusBadge status={c.status} />
+                  </td>
+                  <td className="px-6 py-4 text-right">
+                    <div className="flex justify-end gap-3 text-sm font-bold">
+                      <button onClick={() => setViewingCustomer(c)} className="text-stone-400 hover:text-black transition-colors">View</button>
+                      <button onClick={() => setEditingCustomer({...c})} className="text-stone-400 hover:text-black transition-colors">Edit</button>
+                    </div>
+                  </td>
                 </tr>
-              </thead>
-              <tbody className="divide-y divide-stone-50">
-                {filteredCustomers.length > 0 ? (
-                  filteredCustomers.map((c) => (
-                    <tr key={c.id} className="hover:bg-stone-50/50 transition-colors group">
-                      <td className="px-6 py-4">
-                        <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 rounded-full border-2 border-white shadow-sm overflow-hidden flex-shrink-0">
-                            <img src={`https://ui-avatars.com/api/?name=${c.name}&background=random`} alt="avatar" />
-                          </div>
-                          <span className="font-bold text-sm text-[#2D241E]">{c.name}</span>
-                        </div>
-                      </td>
-                      <td className="px-6 py-4">
-                        <div className="flex flex-col">
-                          <span className="text-sm text-stone-600">{c.email}</span>
-                          <span className="text-[11px] text-stone-400 font-medium">{c.phone}</span>
-                        </div>
-                      </td>
-                      <td className="px-6 py-4 text-center text-sm text-stone-500">{c.date}</td>
-                      <td className="px-6 py-4 text-center">
-                        <span className={`inline-flex items-center text-[10px] font-black px-2.5 py-1 rounded-lg border ${
-                          c.status === 'ACTIVE' 
-                            ? 'bg-[#E9F3E9] text-[#2D5A27] border-[#D1E7D1]' 
-                            : 'bg-red-50 text-red-700 border-red-100'
-                        }`}>
-                          {c.status}
-                        </span>
-                      </td>
-                      <td className="px-6 py-4 text-right">
-                        <div className="flex justify-end gap-3 text-xs font-bold text-stone-400">
-                          <button className="hover:text-[#361205] transition-colors">Edit</button>
-                          <span className="text-stone-200">|</span>
-                          <button className="hover:text-[#361205] transition-colors">View</button>
-                        </div>
-                      </td>
-                    </tr>
-                  ))
-                ) : (
-                  <tr>
-                    <td colSpan="5" className="px-6 py-12 text-center text-stone-400 font-medium">
-                      No customers found matching your criteria.
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
-          </div>
+              ))}
+            </tbody>
+          </table>
+          
+          {/* Pagination Footer */}
+<div className="px-6 py-4 bg-stone-50 border-t flex items-center justify-between">
+  {/* Previous Button */}
+  <button 
+    disabled={currentPage === 1}
+    onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+    className="flex items-center gap-1 text-sm font-bold text-stone-500 hover:text-black disabled:opacity-30 disabled:hover:text-stone-500 transition-colors"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="m15 18-6-6 6-6"/>
+    </svg>
+    <span>Previous</span>
+  </button>
 
-          {/* Pagination Section */}
-          <div className="px-6 py-4 bg-stone-50/30 text-sm text-stone-500 border-t border-stone-100">
-            <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-              <button className="w-full sm:w-auto flex items-center justify-center gap-2 text-[11px] font-bold uppercase tracking-wider text-stone-500 hover:text-[#361205] transition-colors disabled:opacity-30">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
-                </svg> 
-                Previous 
-              </button>
-              <div className="flex items-center gap-2">
-                <button className="w-8 h-8 rounded-lg bg-[#361205] text-white text-xs font-bold shadow-md shadow-[#361205]/20">1</button>
-                <button className="w-8 h-8 rounded-lg text-xs font-bold text-stone-400 hover:bg-stone-200/50 transition-colors">2</button>
-                <button className="w-8 h-8 rounded-lg text-xs font-bold text-stone-400 hover:bg-stone-200/50 transition-colors">3</button>
-                <span className="px-1 text-stone-300">...</span>
+  {/* Dynamic Page Numbers */}
+  <div className="flex gap-2">
+    {Array.from({ length: Math.ceil(filteredCustomers.length / 5) || 1 }, (_, i) => i + 1).map(n => (
+      <button 
+        key={n}
+        onClick={() => setCurrentPage(n)}
+        className={`w-8 h-8 rounded-md text-xs font-bold transition-all ${
+          currentPage === n 
+            ? 'bg-[#2D1B14] text-white shadow-md' 
+            : 'text-stone-500 hover:bg-stone-200'
+        }`}
+      >
+        {n}
+      </button>
+    ))}
+  </div>
+
+  {/* Next Button */}
+  <button 
+    disabled={currentPage >= Math.ceil(filteredCustomers.length / 5)}
+    onClick={() => setCurrentPage(p => p + 1)}
+    className="flex items-center gap-1 text-sm font-bold text-stone-500 hover:text-black disabled:opacity-30 disabled:hover:text-stone-500 transition-colors"
+  >
+    <span>Next</span>
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="m9 18 6-6-6-6"/>
+    </svg>
+  </button>
+</div>
+        </div>
+
+        {/* --- MOBILE CARD VIEW --- */}
+        <div className="md:hidden space-y-4">
+          {filteredCustomers.map((c) => (
+            <div key={c.id} className="bg-white p-4 rounded-2xl border border-stone-200 shadow-sm active:scale-[0.98] transition-transform">
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center gap-3">
+                  <img className="w-12 h-12 rounded-full" src={`https://ui-avatars.com/api/?name=${c.name}&background=random`} alt="" />
+                  <div>
+                    <p className="font-bold text-[#2D1B14]">{c.name}</p>
+                    <p className="text-xs text-stone-500">{c.email}</p>
+                  </div>
+                </div>
+                <StatusBadge status={c.status} />
               </div>
-              <button className="w-full sm:w-auto flex items-center justify-center gap-2 text-[11px] font-bold uppercase tracking-wider text-stone-500 hover:text-[#361205] transition-colors"> 
-                Next
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-                </svg>
-              </button>
+              <div className="grid grid-cols-2 gap-2 pt-3 border-t border-stone-50">
+                <button 
+                  onClick={() => setViewingCustomer(c)}
+                  className="flex items-center justify-center gap-2 py-2.5 bg-stone-100 rounded-xl text-sm font-bold text-stone-700"
+                >
+                  <Eye size={16} /> View
+                </button>
+                <button 
+                   onClick={() => setEditingCustomer({...c})}
+                   className="flex items-center justify-center gap-2 py-2.5 bg-[#2D1B14] rounded-xl text-sm font-bold text-white"
+                >
+                  <Edit2 size={16} /> Edit
+                </button>
+              </div>
             </div>
+          ))}
+        </div>
+
+        {filteredCustomers.length === 0 && (
+          <div className="text-center py-12 text-stone-400">No customers found.</div>
+        )}
+      </div>
+
+      {/* --- VIEW MODAL --- */}
+      {viewingCustomer && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-end md:items-center justify-center p-0 md:p-4 z-50">
+          <div className="bg-white rounded-t-3xl md:rounded-2xl w-full max-w-sm shadow-2xl overflow-hidden relative">
+             <div className="h-20 bg-[#2D1B14] flex justify-end p-4">
+                <button onClick={() => setViewingCustomer(null)} className="text-white/50 hover:text-white"><X /></button>
+             </div>
+             <div className="px-6 pb-8 text-center -mt-10">
+                <img className="w-20 h-20 mx-auto rounded-full border-4 border-white shadow-lg bg-white" src={`https://ui-avatars.com/api/?name=${viewingCustomer.name}&size=128&background=random`} alt="" />
+                <h2 className="mt-4 text-2xl font-bold">{viewingCustomer.name}</h2>
+                <div className="mt-6 space-y-4 text-left border-t pt-6">
+                  <InfoRow icon={<Mail />} label="Email" value={viewingCustomer.email} />
+                  <InfoRow icon={<Phone />} label="Phone" value={viewingCustomer.phone} />
+                  <InfoRow icon={<Award />} label="Points" value={`${viewingCustomer.points} pts`} />
+                </div>
+                <button onClick={() => setViewingCustomer(null)} className="w-full mt-8 py-3 bg-stone-100 rounded-xl font-bold md:hidden">Close</button>
+             </div>
           </div>
         </div>
-      </div>
+      )}
+
+      {/* --- EDIT MODAL --- */}
+      {editingCustomer && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-end md:items-center justify-center p-0 md:p-4 z-50">
+          <form onSubmit={handleSaveEdit} className="bg-white rounded-t-3xl md:rounded-2xl w-full max-w-md shadow-2xl overflow-hidden">
+            <div className="p-6 border-b flex justify-between items-center">
+              <h2 className="text-xl font-bold">Edit Profile</h2>
+              <button type="button" onClick={() => setEditingCustomer(null)}><X className="text-stone-400" /></button>
+            </div>
+            <div className="p-6 space-y-4">
+              <Input label="Full Name" value={editingCustomer.name} onChange={(val) => setEditingCustomer({...editingCustomer, name: val})} />
+              <Input label="Email" type="email" value={editingCustomer.email} onChange={(val) => setEditingCustomer({...editingCustomer, email: val})} />
+              <div>
+                <label className="block text-xs font-bold text-stone-500 uppercase mb-1">Status</label>
+                <select 
+                  className="w-full p-3 border rounded-xl outline-none focus:ring-2 focus:ring-stone-200"
+                  value={editingCustomer.status}
+                  onChange={(e) => setEditingCustomer({...editingCustomer, status: e.target.value})}
+                >
+                  <option value="ACTIVE">ACTIVE</option>
+                  <option value="INACTIVE">INACTIVE</option>
+                </select>
+              </div>
+            </div>
+            <div className="p-6 bg-stone-50 flex flex-col md:flex-row gap-3">
+              <button type="submit" className="w-full py-3 bg-[#2D1B14] text-white rounded-xl font-bold flex items-center justify-center gap-2 order-1 md:order-2">
+                <Save size={18} /> Save Changes
+              </button>
+              <button type="button" onClick={() => setEditingCustomer(null)} className="w-full py-3 font-bold text-stone-500 order-2 md:order-1">Cancel</button>
+            </div>
+          </form>
+        </div>
+      )}
     </div>
   );
 };
+
+// --- SUB-COMPONENTS ---
+
+const StatusBadge = ({ status }) => (
+  <span className={`text-[10px] font-black px-2.5 py-1 rounded-md border tracking-wider ${
+    status === 'ACTIVE' ? "bg-green-50 text-green-700 border-green-100" : "bg-stone-100 text-stone-500 border-stone-200"
+  }`}>
+    {status}
+  </span>
+);
+
+const InfoRow = ({ icon, label, value }) => (
+  <div className="flex items-center gap-3">
+    <div className="p-2 bg-stone-100 rounded-lg text-stone-500">
+      {React.cloneElement(icon, { size: 16 })}
+    </div>
+    <div>
+      <p className="text-[10px] font-bold text-stone-400 uppercase leading-none mb-1">{label}</p>
+      <p className="text-sm font-semibold text-stone-700">{value}</p>
+    </div>
+  </div>
+);
+
+const Input = ({ label, type = "text", value, onChange }) => (
+  <div>
+    <label className="block text-xs font-bold text-stone-500 uppercase mb-1">{label}</label>
+    <input 
+      required
+      type={type}
+      className="w-full p-3 border border-stone-300 rounded-xl outline-none focus:ring-2 focus:ring-stone-200 transition-all"
+      value={value}
+      onChange={(e) => onChange(e.target.value)}
+    />
+  </div>
+);
 
 export default CustomerLists;
