@@ -18,7 +18,8 @@ import Footer from './components/common/Footer'
 function App() {
   return (
     <div>
-      <h1>Prepare home page</h1>
+      h11
+      
       <Navbar/>
       <HeroSection/>     
       <Design_Top_Product/>
