@@ -1,8 +1,9 @@
-import { useRef } from "react";
-import branchlogo from "../../assets/images/branches/branchlogo.png";
 
-export default function OtpDesign() {
-  const inputs = useRef([]);
+import React, { useRef } from "react";
+import branchlogo from "../../assets/images/branches/branchlogo.png";
+import { Link } from "react-router-dom";
+const OtpPage = () => {
+   const inputs = useRef([]);
 
   const handleInput = (e, index) => {
     if (e.target.value && index < 5) {
@@ -15,9 +16,9 @@ export default function OtpDesign() {
       inputs.current[index - 1]?.focus();
     }
   };
-
   return (
-    <div className="min-h-screen bg-[#f4f1ed] flex items-center justify-center p-4 global-font">
+    <div>
+         <div className="min-h-screen flex items-center justify-center p-4 global-font">
       <div className="w-full max-w-5xl bg-white rounded-3xl shadow-xl overflow-hidden flex flex-col md:flex-row">
 
         <div className="w-full md:w-1/2 bg-[#f5efe6] p-6 sm:p-8 md:p-10 flex flex-col justify-center space-y-6 text-center md:text-left">
@@ -67,20 +68,32 @@ export default function OtpDesign() {
               />
             ))}
           </div>
-
+            <Link to="/reset-password">
           <button className="w-full py-3 rounded-xl bg-white text-[#6f4e37] font-semibold hover:scale-[1.02] transition">
             Verify Code
           </button>
-
-          <p className="mt-6 text-sm text-white/80 text-center md:text-left">
+            </Link>
+            <div className="flex mt-6 gap-5 items-center">
+          <p className=" text-sm text-white/80 text-center md:text-left">
             Didn’t receive the code?
             <a className="ml-2 underline cursor-pointer hover:text-white">
               Resend
             </a>
           </p>
+          <p className=" text-sm text-white/80 text-center md:text-left">
+            Wrong email?
+            <Link to="/forgot-password" className="ml-2 underline cursor-pointer hover:text-white">
+              Back to send email
+            </Link>
+          </p>
+              </div>              
+          
         </div>
 
       </div>
     </div>
-  );
+    </div>
+  )
 }
+
+export default OtpPage
