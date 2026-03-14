@@ -15,20 +15,20 @@ import HeroSection from './components/public/home/HeroSection'
 import Design_Top_Product from './components/public/home/Design_Top_Product'
 import Navbar from './components/Navbar'
 import { Routes,Route } from 'react-router-dom'
-import Footer from './components/common/Footer'
 
 const App = () => {
   return (
-    <div>
-      <Navbar/>
-      <HeroSection/>     
-      <Design_Top_Product/>
-      <Footer/>
-    </div>
-  )
-}
+    <Routes>
+        <Route path='/' element={<Register></Register>}></Route>
+        <Route path='/register' element={<Register></Register>}></Route>
+        <Route path='/login' element={<Login/>}> </Route>
+         <Route path='/GetOtpInEmail' element={<GetOtpInEmail/>}></Route>
+        <Route path='/resetpassword' element={<ResetPassword/>}></Route>
+        <Route path='/otpdesign' element={<OtpDesign/>}></Route>
 
 
+      </Routes>
+  )}
     
 
 
