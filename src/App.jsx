@@ -15,6 +15,7 @@ import HeroSection from './components/public/home/HeroSection'
 import Design_Top_Product from './components/public/home/Design_Top_Product'
 import Navbar from './components/Navbar'
 import { Routes,Route } from 'react-router-dom'
+import MenuManagement from './dashboard/features/a1-core-crud-forms/crud-menu-coffee'
 
 const App = () => {
   return (
@@ -25,7 +26,8 @@ const App = () => {
          <Route path='/GetOtpInEmail' element={<GetOtpInEmail/>}></Route>
         <Route path='/resetpassword' element={<ResetPassword/>}></Route>
          <Route path='/otpdesign' element={<OtpDesign/>}></Route>
-
+        <Route path='/dashboard' element={<DashboardOverview/>}></Route>
+        <Route path='/menu' element={<MenuManagement/>}></Route>
 
       </Routes>
   )}
