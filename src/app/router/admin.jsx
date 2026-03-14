@@ -1,8 +1,8 @@
-import DashboardOverview from "../pages/dashboard/DashboardOverview";
+import { DashboardOverview } from "../../dashboard/features/dashboard-overview/DashboardMain";
 import UserManagement from "../../dashboard/pages/users/UserManagement";
 import CustomerLists from "../../dashboard/features/a2-tables-filters-ux/confirmation-modals/Customerlists";
 import MenuManagement from "../../dashboard/features/a1-core-crud-forms/crud-menu-coffee";
-import ProtectedRoute from "../components/ProtectedRoute";
+import ProtectedRoute from "../../components/ProtectedRoute";
 import DashboardLayout from "../../dashboard/layouts/DashboardLayout";
 
 // const adminRoutes = [
