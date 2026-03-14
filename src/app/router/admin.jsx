@@ -44,9 +44,10 @@ const adminRoutes = [
   {
     path: "/dashboard",
     element: (
-      <ProtectedRoute>
-        <DashboardLayout/>
-      </ProtectedRoute>
+      // <ProtectedRoute>
+      //   <DashboardLayout/>
+      // </ProtectedRoute>
+      <DashboardLayout/>
     ),
     children: [
       { index: true, element: <DashboardOverview /> }, 
