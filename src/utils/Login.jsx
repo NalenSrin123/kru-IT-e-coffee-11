@@ -51,7 +51,7 @@ const handleChange=(e)=>{
             <label>Remember for 30 day</label>
           </div>
           <h1 className="text-blue-600 underline cursor-pointer">
-            <Link to={"/GetOtpInEmail"}> Forgot password</Link>
+            <Link to={"/forgot-password"}> Forgot password</Link>
            
           </h1>
         </div>
