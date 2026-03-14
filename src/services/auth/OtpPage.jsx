@@ -73,7 +73,7 @@ const OtpPage = () => {
             Verify Code
           </button>
             </Link>
-            <div className="flex mt-6 gap-5 items-center">
+            <div className=" flex flex-col md:flex-row mt-6 md:gap-5 gap-1 items-center">
           <p className=" text-sm text-white/80 text-center md:text-left">
             Didn’t receive the code?
             <a className="ml-2 underline cursor-pointer hover:text-white">
