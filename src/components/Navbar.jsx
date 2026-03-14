@@ -1,9 +1,10 @@
 import { useState } from 'react'
 import logo from '../assets/images/branding/logo.png'
+import { Link, useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false)
-
+  const navigate = useNavigate();
   return (
     <nav className='w-full bg-white shadow-md'>
       <div className='max-w-7xl mx-auto px-6'>
@@ -26,11 +27,11 @@ const Navbar = () => {
           <ul className='hidden lg:flex gap-6 items-center text-lg font-medium'>
             <li className='cursor-pointer hover:text-blue-600 transition'>Blog</li>
             <li className='cursor-pointer hover:text-blue-600 transition'>Cart (0)</li>
-            <li>
-              <button className='px-4 py-2 border rounded-xl hover:bg-blue-600 hover:text-white transition'>
-                Login
-              </button>
-            </li>
+            <Link to="/login">
+  <button className='px-4 py-2 border rounded-xl hover:bg-blue-600 hover:text-white transition'>
+    Login
+  </button>
+</Link>
           </ul>
 
           {/* Mobile Button */}

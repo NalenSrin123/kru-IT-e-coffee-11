@@ -1,49 +1,34 @@
-<<<<<<< HEAD
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React from "react";
+import { Routes, Route } from "react-router-dom";
 
-function App() {
-  const [count, setCount] = useState(0)
 
+import Register from "./services/auth/register";
+import ForgotPassword from "./services/auth/Forgotpassword";
+import PublicLayout from "./app/layouts/PublicLayout";
+import AuthLayout from "./app/layouts/AuthLayout";
+import Login from "./utils/Login";
+
+const App = () => {
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <h1>IT e-coffee</h1>
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-=======
+    <Routes>
+      {/* Public Pages */}
+      <Route
+        path="/"
+        element={<PublicLayout />}
+      >
+        <Route index element={<></>} /> {/* Extra content if needed */}
+      </Route>
 
-import {BrowserRouter, Routes, Route} from "react-router-dom"
-import React from 'react'
-import Design_UI_get_reset_password_in_email from './services/auth/Design_UI_get_reset_password_in_email'
+      {/* Auth Pages */}
+      <Route
+        element={<AuthLayout />}
+      >
+        <Route path="/login" element={<Login/>} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+      </Route>
+    </Routes>
+  );
+};
 
-function App() {
-  return (
-    <div>
-      <Design_UI_get_reset_password_in_email/>
-    </div>
->>>>>>> 6a4c7f8da5f54231ac5e9b1898a6748443be58bd
-  )
-}
-
-export default App
+export default App;
