@@ -3,7 +3,7 @@ import React from "react";
 function ForgotPassword() {
   return (
     <div className="flex items-center justify-center min-h-screen">
-      <div className="w-full max-w-md bg-white shadow-lg rounded-lg p-8">
+      <div className="w-full max-w-md bg-gray-50 shadow-lg rounded-lg p-8">
         
         <h2 className="text-2xl font-bold text-center mb-4">
           Forgot Password
