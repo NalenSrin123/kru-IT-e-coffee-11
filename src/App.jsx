@@ -7,6 +7,7 @@ import ForgotPassword from "./services/auth/Forgotpassword";
 import PublicLayout from "./app/layouts/PublicLayout";
 import AuthLayout from "./app/layouts/AuthLayout";
 import Login from "./utils/Login";
+import OtpDesign from "./services/auth/OtpPage";
 
 const App = () => {
   return (
@@ -26,6 +27,8 @@ const App = () => {
         <Route path="/login" element={<Login/>} />
         <Route path="/register" element={<Register />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/otpdesign" element={<OtpDesign/>}></Route>
+        
       </Route>
     </Routes>
   );
