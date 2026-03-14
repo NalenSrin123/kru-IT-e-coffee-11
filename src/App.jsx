@@ -15,11 +15,11 @@ import HeroSection from './components/public/home/HeroSection'
 import Design_Top_Product from './components/public/home/Design_Top_Product'
 import Navbar from './components/Navbar'
 import { Routes,Route } from 'react-router-dom'
+import Footer from './components/common/Footer'
 
 const App = () => {
   return (
     <div>
-      <h1>Prepare home page</h1>
       <Navbar/>
       <HeroSection/>     
       <Design_Top_Product/>
@@ -29,8 +29,6 @@ const App = () => {
 }
 
 
-      </Routes>
-  )}
     
 
 
