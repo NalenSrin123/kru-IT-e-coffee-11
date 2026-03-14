@@ -1,39 +1,66 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
+  const navigate = useNavigate();
+  const [data,setdata]=useState({
+    email:"",
+    password:"",
+  });
+ 
+const handleChange=(e)=>{
+    setdata({
+      ...data,
+      [e.target.name]:e.target.value
+    });
+  }
+  const handleSubmit=(e)=>{
+    e.preventDefault();
+    console.log(data);
+    navigate("/otpdesign");
+  
+  }
+  
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100 px-4">
-      <form className="bg-white p-6 md:p-8 lg:p-10 rounded-xl shadow-md w-full max-w-md">
+      <form  onSubmit={handleSubmit} className="bg-white p-6 md:p-8 lg:p-10 rounded-xl shadow-md w-full max-w-md">
 
         <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-center mb-6">
           Welcome login
         </h1>
 
         <input
+        onChange={handleChange}
+        name="email"
           type="email"
           placeholder="Email"
-          className="w-full border p-2 md:p-3 rounded mt-4 mb-2"
+          className="w-full border p-2 md:p-3 rounded mt-4 mb-2" required
         />
 
         <input
+        onChange={handleChange}
+        name="password"
           type="password"
           placeholder="Password"
-          className="w-full border p-2 md:p-3 rounded mt-4 mb-2"
+          className="w-full border p-2 md:p-3 rounded mt-4 mb-2" required
         />
-
         <div className="flex justify-between items-center mt-2 mb-3 text-sm">
           <div className="flex gap-2 items-center">
             <input type="checkbox" />
             <label>Remember for 30 day</label>
           </div>
-
           <h1 className="text-blue-600 underline cursor-pointer">
-            Forgot password
+            <Link to={"/GetOtpInEmail"}> Forgot password</Link>
+           
           </h1>
         </div>
 
-        <button className="w-full bg-blue-500 text-white p-2 md:p-3 rounded hover:bg-blue-600 mt-4 mb-2">
+        <button type="submit" className="w-full bg-blue-500 text-white p-2 md:p-3 rounded hover:bg-blue-600 mt-4 mb-2">
+          
           Login
+          
+          
         </button>
 
         {/* Login with google and icon */}
@@ -66,7 +93,7 @@ function Login() {
 
         <div className="flex gap-2 justify-center mt-3 text-sm">
           <h1>Don't have an account?</h1>
-          <h1 className="text-blue-600 underline cursor-pointer">Sign up</h1>
+          <Link className="text-blue-600 underline cursor-pointer" to="/register">Register</Link>
         </div>
 
       </form>
@@ -75,3 +102,68 @@ function Login() {
 }
 
 export default Login;
+// import { useState } from "react";
+// import { Link } from "react-router-dom";
+
+// function Login() {
+
+//   const [data,setdata]=useState({
+//     email:"",
+//     password:""
+//   });
+//   const handleChange=(e)=>{
+//     setdata({
+//       data,
+//       [e.target.name]:e.target.value
+//     });
+//   }
+//   const handleSubmit=(e)=>{
+//     e.preventDefault();
+//     console.log(data);
+    
+//   }
+
+//   return (
+//     <div className="flex justify-center items-center min-h-screen bg-gray-100 px-4">
+
+//       <form  onSubmit={handleSubmit}  className="bg-white p-6 rounded-xl shadow-md w-full max-w-md">
+
+//         <h1 className="text-3xl font-bold text-center mb-6">
+//           Welcome login
+//         </h1>
+
+//         <input
+//           onChange={handleChange}
+//           name="email"
+//           type="email"
+//           placeholder="Email"
+//           className="w-full border p-2 rounded mt-4 mb-2 " required
+//         />
+
+//         <input
+//           onChange={handleChange}
+//           name="password"
+//           type="password"
+//           placeholder="Password"
+//           className="w-full border p-2 rounded mt-4 mb-2" required
+//         />
+
+//         <button
+//         type="submit"
+//         className="w-full bg-blue-500 text-white p-2 rounded mt-4">
+//           Login
+//         </button>
+
+//         <div className="flex gap-2 justify-center mt-3 text-sm">
+//           <h1>Don't have an account?</h1>
+//           <Link className="text-blue-600 underline" to="/register">
+//             Register
+//           </Link>
+//         </div>
+
+//       </form>
+//     </div>
+//   );
+// }
+
+// export default Login;
