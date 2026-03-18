@@ -4,7 +4,9 @@ import { Routes, Route } from "react-router-dom";
 import Register from "./services/auth/register";
 import ForgotPassword from "./services/auth/Forgotpassword";
 import PublicLayout from "./app/layouts/PublicLayout";
+import OtpPage from "./services/auth/OtpPage";
 import AuthLayout from "./app/layouts/AuthLayout";
+import ResetPassword from "./services/auth/Comfirm_rest_pw";
 import Login from "./utils/Login";
 import adminRoutes from "./app/router/admin";
 
@@ -25,7 +27,9 @@ const App = () => {
       >
         <Route path="/login" element={<Login/>} />
         <Route path="/register" element={<Register />} />
+        <Route path="/otpage" element={<OtpPage />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
       </Route>
 
       {/* Dashboard / Admin Routes  */}
