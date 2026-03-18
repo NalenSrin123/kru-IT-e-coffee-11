@@ -17,17 +17,21 @@ const CustomerLists = () => {
   // 2. UI State
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("All");
-  const [currentPage, setCurrentPage] = useState(1); // Added missing state
+  const [currentPage, setCurrentPage] = useState(1);
   const [viewingCustomer, setViewingCustomer] = useState(null);
   const [editingCustomer, setEditingCustomer] = useState(null);
 
-  // 3. Filtering Logic
+  // 3. Filtering Logic (Cleaned up and combined)
   const filteredCustomers = useMemo(() => {
     return customers.filter((customer) => {
       const matchesSearch = 
         customer.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        customer.email.toLowerCase().includes(searchTerm.toLowerCase());
-      const matchesStatus = statusFilter === "All" || customer.status === statusFilter.toUpperCase();
+        customer.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        customer.phone.includes(searchTerm);
+
+      const matchesStatus = 
+        statusFilter === "All" || customer.status === statusFilter.toUpperCase();
+
       return matchesSearch && matchesStatus;
     });
   }, [searchTerm, statusFilter, customers]);
@@ -55,7 +59,7 @@ const CustomerLists = () => {
             <div className="relative">
               <input 
                 type="text" 
-                placeholder="Name or email..." 
+                placeholder="Name, email, or phone..." 
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="w-full pl-4 pr-10 py-3 md:py-2 border border-stone-300 rounded-xl md:rounded-lg focus:ring-2 focus:ring-[#2D1B14] outline-none transition-all bg-white"
@@ -115,48 +119,37 @@ const CustomerLists = () => {
           </table>
           
           {/* Pagination Footer */}
-<div className="px-6 py-4 bg-stone-50 border-t flex items-center justify-between">
-  {/* Previous Button */}
-  <button 
-    disabled={currentPage === 1}
-    onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
-    className="flex items-center gap-1 text-sm font-bold text-stone-500 hover:text-black disabled:opacity-30 disabled:hover:text-stone-500 transition-colors"
-  >
-    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-      <path d="m15 18-6-6 6-6"/>
-    </svg>
-    <span>Previous</span>
-  </button>
+          <div className="px-6 py-4 bg-stone-50 border-t flex items-center justify-between">
+            <button 
+              disabled={currentPage === 1}
+              onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+              className="flex items-center gap-1 text-sm font-bold text-stone-500 hover:text-black disabled:opacity-30 transition-colors"
+            >
+              <ChevronDown className="rotate-90 w-4 h-4" /> <span>Previous</span>
+            </button>
 
-  {/* Dynamic Page Numbers */}
-  <div className="flex gap-2">
-    {Array.from({ length: Math.ceil(filteredCustomers.length / 5) || 1 }, (_, i) => i + 1).map(n => (
-      <button 
-        key={n}
-        onClick={() => setCurrentPage(n)}
-        className={`w-8 h-8 rounded-md text-xs font-bold transition-all ${
-          currentPage === n 
-            ? 'bg-[#2D1B14] text-white shadow-md' 
-            : 'text-stone-500 hover:bg-stone-200'
-        }`}
-      >
-        {n}
-      </button>
-    ))}
-  </div>
+            <div className="flex gap-2">
+              {Array.from({ length: Math.ceil(filteredCustomers.length / 5) || 1 }, (_, i) => i + 1).map(n => (
+                <button 
+                  key={n}
+                  onClick={() => setCurrentPage(n)}
+                  className={`w-8 h-8 rounded-md text-xs font-bold transition-all ${
+                    currentPage === n ? 'bg-[#2D1B14] text-white shadow-md' : 'text-stone-500 hover:bg-stone-200'
+                  }`}
+                >
+                  {n}
+                </button>
+              ))}
+            </div>
 
-  {/* Next Button */}
-  <button 
-    disabled={currentPage >= Math.ceil(filteredCustomers.length / 5)}
-    onClick={() => setCurrentPage(p => p + 1)}
-    className="flex items-center gap-1 text-sm font-bold text-stone-500 hover:text-black disabled:opacity-30 disabled:hover:text-stone-500 transition-colors"
-  >
-    <span>Next</span>
-    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-      <path d="m9 18 6-6-6-6"/>
-    </svg>
-  </button>
-</div>
+            <button 
+              disabled={currentPage >= Math.ceil(filteredCustomers.length / 5)}
+              onClick={() => setCurrentPage(p => p + 1)}
+              className="flex items-center gap-1 text-sm font-bold text-stone-500 hover:text-black disabled:opacity-30 transition-colors"
+            >
+              <span>Next</span> <ChevronDown className="-rotate-90 w-4 h-4" />
+            </button>
+          </div>
         </div>
 
         {/* --- MOBILE CARD VIEW --- */}
@@ -192,7 +185,7 @@ const CustomerLists = () => {
         </div>
 
         {filteredCustomers.length === 0 && (
-          <div className="text-center py-12 text-stone-400">No customers found.</div>
+          <div className="text-center py-12 text-stone-400 font-medium">No customers found matching your criteria.</div>
         )}
       </div>
 
@@ -201,7 +194,7 @@ const CustomerLists = () => {
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-end md:items-center justify-center p-0 md:p-4 z-50">
           <div className="bg-white rounded-t-3xl md:rounded-2xl w-full max-w-sm shadow-2xl overflow-hidden relative">
              <div className="h-20 bg-[#2D1B14] flex justify-end p-4">
-                <button onClick={() => setViewingCustomer(null)} className="text-white/50 hover:text-white"><X /></button>
+                <button onClick={() => setViewingCustomer(null)} className="text-white/50 hover:text-white transition-colors"><X /></button>
              </div>
              <div className="px-6 pb-8 text-center -mt-10">
                 <img className="w-20 h-20 mx-auto rounded-full border-4 border-white shadow-lg bg-white" src={`https://ui-avatars.com/api/?name=${viewingCustomer.name}&size=128&background=random`} alt="" />
@@ -231,7 +224,7 @@ const CustomerLists = () => {
               <div>
                 <label className="block text-xs font-bold text-stone-500 uppercase mb-1">Status</label>
                 <select 
-                  className="w-full p-3 border rounded-xl outline-none focus:ring-2 focus:ring-stone-200"
+                  className="w-full p-3 border border-stone-300 rounded-xl outline-none focus:ring-2 focus:ring-stone-200"
                   value={editingCustomer.status}
                   onChange={(e) => setEditingCustomer({...editingCustomer, status: e.target.value})}
                 >
@@ -244,7 +237,7 @@ const CustomerLists = () => {
               <button type="submit" className="w-full py-3 bg-[#2D1B14] text-white rounded-xl font-bold flex items-center justify-center gap-2 order-1 md:order-2">
                 <Save size={18} /> Save Changes
               </button>
-              <button type="button" onClick={() => setEditingCustomer(null)} className="w-full py-3 font-bold text-stone-500 order-2 md:order-1">Cancel</button>
+              <button type="button" onClick={() => setEditingCustomer(null)} className="w-full py-3 font-bold text-stone-500 order-2 md:order-1 transition-colors">Cancel</button>
             </div>
           </form>
         </div>

@@ -1,12 +1,12 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 
-
 import Register from "./services/auth/register";
 import ForgotPassword from "./services/auth/Forgotpassword";
 import PublicLayout from "./app/layouts/PublicLayout";
 import AuthLayout from "./app/layouts/AuthLayout";
 import Login from "./utils/Login";
+import adminRoutes from "./app/router/admin";
 
 const App = () => {
   return (
@@ -27,6 +27,21 @@ const App = () => {
         <Route path="/register" element={<Register />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
       </Route>
+
+      {/* Dashboard / Admin Routes  */}
+      {adminRoutes.map((route, index) => (
+        <Route key={index} path={route.path} element={route.element}>
+          {route.children &&
+            route.children.map((child, childIndex) => (
+              <Route
+                key={childIndex}
+                index={child.index}
+                path={child.path}
+                element={child.element}
+              />
+            ))}
+        </Route>
+      ))}
     </Routes>
   );
 };
