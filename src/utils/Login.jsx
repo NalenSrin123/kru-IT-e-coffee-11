@@ -23,8 +23,8 @@ const handleChange=(e)=>{
   }
   
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100 px-4">
-      <form  onSubmit={handleSubmit} className="bg-white p-6 md:p-8 lg:p-10 rounded-xl shadow-md w-full max-w-md">
+    <div className="flex justify-center items-center min-h-screen">
+      <form  onSubmit={handleSubmit} className="bg-gray-50 p-6 md:p-8 lg:p-10 rounded-xl shadow-lg w-full max-w-md">
 
         <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-center mb-6">
           Welcome login

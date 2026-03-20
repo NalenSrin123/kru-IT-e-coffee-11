@@ -1,28 +1,28 @@
 import React from 'react';
+import { Link, useLocation } from 'react-router-dom'; // Import these
 import { 
   Coffee, 
   SquaresFour, 
   Receipt, 
   Warehouse, 
   Users, 
-  ChartLineUp,
   X 
 } from '@phosphor-icons/react';
 
 const Sidebar = ({ isOpen, toggleSidebar }) => {
+  const location = useLocation(); // This helps us see which page is currently active
+
   const menuItems = [
-    { name: 'Dashboard', icon: SquaresFour, active: true },
-    { name: 'Orders', icon: Receipt },
-    { name: 'Inventory', icon: Warehouse },
-    { name: 'Users', icon: Users },
-    { name: 'Promotions', icon: Receipt },
-    { name: 'Branches', icon: Warehouse },
-    { name: 'Reports', icon: ChartLineUp },
+    { name: 'Dashboard', icon: SquaresFour, path: '/dashboard' },
+    { name: 'Customers', icon: Receipt, path: '/dashboard/customers' },
+    { name: 'Inventory', icon: Warehouse, path: '/dashboard/inventory' },
+    { name: 'Users', icon: Users, path: '/dashboard/users' },
+    { name: 'Menu', icon: Receipt, path: '/dashboard/menu' },
   ];
 
   return (
     <>
-      {/* Mobile Overlay: Darkens the background when sidebar is open */}
+      {/* Mobile Overlay */}
       {isOpen && (
         <div 
           className="fixed inset-0 bg-black/50 z-40 lg:hidden" 
@@ -48,7 +48,6 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
             </div>
           </div>
           
-          {/* Close button - Only visible on mobile */}
           <button onClick={toggleSidebar} className="xl:hidden p-2 text-gray-400">
             <X size={24} />
           </button>
@@ -56,20 +55,30 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
 
         {/* Navigation */}
         <nav className="flex-1 space-y-1">
-          {menuItems.map((item) => (
-            <a
-              key={item.name}
-              href="#"
-              className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
-                item.active 
-                  ? 'bg-[#361205]/5 text-[#361205] border-l-4 border-[#361205]' 
-                  : 'text-gray-500 hover:bg-[#F7F4E8]'
-              }`}
-            >
-              <item.icon size={20} weight={item.active ? "fill" : "regular"} />
-              <span className={`text-sm ${item.active ? 'font-bold' : 'font-medium'}`}>{item.name}</span>
-            </a>
-          ))}
+          {menuItems.map((item) => {
+            // Check if the current URL matches the item path
+            const isActive = location.pathname === item.path;
+
+            return (
+              <Link
+                key={item.name}
+                to={item.path}
+                onClick={() => {
+                  if (window.innerWidth < 1280) toggleSidebar(); // Close sidebar on mobile after click
+                }}
+                className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
+                  isActive 
+                    ? 'bg-[#361205]/5 text-[#361205] border-l-4 border-[#361205]' 
+                    : 'text-gray-500 hover:bg-[#F7F4E8]'
+                }`}
+              >
+                <item.icon size={20} weight={isActive ? "fill" : "regular"} />
+                <span className={`text-sm ${isActive ? 'font-bold' : 'font-medium'}`}>
+                  {item.name}
+                </span>
+              </Link>
+            );
+          })}
         </nav>
 
         {/* User Profile */}

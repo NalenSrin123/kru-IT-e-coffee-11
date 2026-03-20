@@ -4,18 +4,6 @@ function Inventory() {
   return (
     <div className="flex flex-col lg:flex-row min-h-screen bg-gray-100">
 
-      {/* Sidebar */}
-      <div className="hidden lg:flex flex-col w-64 bg-white border-r">
-        <div className="p-6 font-bold text-lg">E-Coffee Admin</div>
-
-        <nav className="flex flex-col gap-2 px-4">
-          <a className="p-2 hover:bg-gray-100 rounded">Dashboard</a>
-          <a className="p-2 bg-orange-100 text-orange-600 rounded">Inventory</a>
-          <a className="p-2 hover:bg-gray-100 rounded">Customer</a>
-          <a className="p-2 hover:bg-gray-100 rounded">Analytics</a>
-        </nav>
-      </div>
-
       {/* Main */}
       <div className="flex-1">
 
