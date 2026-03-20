@@ -1,14 +1,56 @@
 import React from "react";
-import Design_Detail from "./components/public/detail/Design_Detail";
+import { Routes, Route } from "react-router-dom";
 
-function App() {
+import Register from "./services/auth/register";
+import ForgotPassword from "./services/auth/Forgotpassword";
+import PublicLayout from "./app/layouts/PublicLayout";
+import OtpPage from "./services/auth/OtpPage";
+import AuthLayout from "./app/layouts/AuthLayout";
+import ResetPassword from "./services/auth/Comfirm_rest_pw";
+import Login from "./utils/Login";
+import adminRoutes from "./app/router/admin";
+
+
+const App = () => {
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-      <div className="w-full max-w-7xl px-4 py-6">
-        <Design_Detail />
-      </div>
-    </div>
+    <Routes>
+      {/* Public Pages */}
+      <Route
+         path="/"
+        element={<PublicLayout />}
+      > 
+         <Route index element={<></>} /> Extra content if needed 
+      </Route>
+
+      {/* Auth Pages */}
+      <Route
+        element={<AuthLayout />}
+      >
+      
+        <Route path="/login" element={<Login/>} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/otpage" element={<OtpPage />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
+      </Route>
+
+      {/* Dashboard / Admin Routes  */}
+      {adminRoutes.map((route, index) => (
+        <Route key={index} path={route.path} element={route.element}>
+          {route.children &&
+            route.children.map((child, childIndex) => (
+              <Route
+                key={childIndex}
+                index={child.index}
+                path={child.path}
+                element={child.element}
+              />
+            ))}
+        </Route>
+      ))}
+    </Routes>
+
   );
-}
+};
 
 export default App;
