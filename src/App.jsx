@@ -10,21 +10,23 @@ import ResetPassword from "./services/auth/Comfirm_rest_pw";
 import Login from "./utils/Login";
 import adminRoutes from "./app/router/admin";
 
+
 const App = () => {
   return (
     <Routes>
       {/* Public Pages */}
       <Route
-        path="/"
+         path="/"
         element={<PublicLayout />}
-      >
-        <Route index element={<></>} /> {/* Extra content if needed */}
+      > 
+         <Route index element={<></>} /> Extra content if needed 
       </Route>
 
       {/* Auth Pages */}
       <Route
         element={<AuthLayout />}
       >
+      
         <Route path="/login" element={<Login/>} />
         <Route path="/register" element={<Register />} />
         <Route path="/otpage" element={<OtpPage />} />
