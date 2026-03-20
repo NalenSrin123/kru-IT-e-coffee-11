@@ -10,22 +10,30 @@ import { DashboardOverview } from './dashboard/features/dashboard-overview/Dashb
 import CustomerLists from './dashboard/features/a2-tables-filters-ux/confirmation-modals/Customerlists'
 import HeroSection from './components/public/home/HeroSection'
 import Design_Top_Product from './components/public/home/Design_Top_Product'
+import Footer from './components/common/Footer'
+import Navbar from './components/Navbar'
+import AddToCardPage from './dashboard/pages/prices/AddToCardPage'
+
+
 
 function App() {
   return (
     <div>
-      <Design_UI_get_reset_password_in_email/>
-      <ResetPassword/>
+      {/*<Design_UI_get_reset_password_in_email/>
+      <ResetPassword/>*/}
+      <Navbar/>
       {/* <ForgotPassword/> */}
-      <GetOtpInEmail/>
-      <OtpDesign/>
+      {/*<GetOtpInEmail/>
+      <OtpDesign/>*/}
       {/* <Sidebar/> */}
-      <DashboardOverview/>
-      <CustomerLists/>
+      {/*<DashboardOverview/>
+      <CustomerLists/>*/}
       <HeroSection/>
       <Design_Top_Product/>
+      <Footer/>
+      <AddToCardPage/>
     </div>
   )
-}
+} 
 
 export default App
