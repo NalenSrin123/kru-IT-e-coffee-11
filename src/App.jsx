@@ -1,39 +1,56 @@
+import React from "react";
+import { Routes, Route } from "react-router-dom";
 
-import React from 'react'
-import Design_UI_get_reset_password_in_email from './services/auth/Design_UI_get_reset_password_in_email'
-import ResetPassword from './services/auth/Comfirm_rest_pw'
-import ForgotPassword from './services/auth/Forgotpassword'
-import GetOtpInEmail from './services/auth/GetOtpInEmail'
-import OtpDesign from './services/auth/OtpPage'
-import Sidebar from './dashboard/features/Sidebar/sidebar'
-import { DashboardOverview } from './dashboard/features/dashboard-overview/DashboardMain'
-import CustomerLists from './dashboard/features/a2-tables-filters-ux/confirmation-modals/Customerlists'
-import HeroSection from './components/public/home/HeroSection'
-import Design_Top_Product from './components/public/home/Design_Top_Product'
-import Footer from './components/common/Footer'
-import Navbar from './components/Navbar'
-import AddToCardPage from './dashboard/pages/prices/AddToCardPage'
+import Register from "./services/auth/register";
+import ForgotPassword from "./services/auth/Forgotpassword";
+import PublicLayout from "./app/layouts/PublicLayout";
+import OtpPage from "./services/auth/OtpPage";
+import AuthLayout from "./app/layouts/AuthLayout";
+import ResetPassword from "./services/auth/Comfirm_rest_pw";
+import Login from "./utils/Login";
+import adminRoutes from "./app/router/admin";
 
 
-
-function App() {
+const App = () => {
   return (
-    <div>
-      {/*<Design_UI_get_reset_password_in_email/>
-      <ResetPassword/>*/}
-      <Navbar/>
-      {/* <ForgotPassword/> */}
-      {/*<GetOtpInEmail/>
-      <OtpDesign/>*/}
-      {/* <Sidebar/> */}
-      {/*<DashboardOverview/>
-      <CustomerLists/>*/}
-      <HeroSection/>
-      <Design_Top_Product/>
-      <Footer/>
-      <AddToCardPage/>
-    </div>
-  )
-} 
+    <Routes>
+      {/* Public Pages */}
+      <Route
+         path="/"
+        element={<PublicLayout />}
+      > 
+         <Route index element={<></>} /> Extra content if needed 
+      </Route>
 
-export default App
+      {/* Auth Pages */}
+      <Route
+        element={<AuthLayout />}
+      >
+      
+        <Route path="/login" element={<Login/>} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/otpage" element={<OtpPage />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
+      </Route>
+
+      {/* Dashboard / Admin Routes  */}
+      {adminRoutes.map((route, index) => (
+        <Route key={index} path={route.path} element={route.element}>
+          {route.children &&
+            route.children.map((child, childIndex) => (
+              <Route
+                key={childIndex}
+                index={child.index}
+                path={child.path}
+                element={child.element}
+              />
+            ))}
+        </Route>
+      ))}
+    </Routes>
+
+  );
+};
+
+export default App;
