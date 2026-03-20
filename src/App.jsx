@@ -7,6 +7,7 @@ import ForgotPassword from "./services/auth/Forgotpassword";
 import PublicLayout from "./app/layouts/PublicLayout";
 import AuthLayout from "./app/layouts/AuthLayout";
 import Login from "./utils/Login";
+import Design_About_Page from "./components/public/about/Design_About_Page";
 
 const App = () => {
   return (
@@ -28,6 +29,7 @@ const App = () => {
         <Route path="/forgot-password" element={<ForgotPassword />} />
       </Route>
     </Routes>
+   
   );
 };
 
