@@ -3,10 +3,10 @@ import { Link, useLocation } from 'react-router-dom'; // Import these
 import { 
   SquaresFour,
   Coffee, 
-  UserList,     // Changed for Customers
-  Package,      // Changed for Inventory
-  UserGear,     // Changed for Admin Users
-  CookingPot,   // Changed for the Food/Drink Menu 
+  UserList,     
+  Package,     
+  UserGear,     
+  CookingPot,   
   X 
 } from '@phosphor-icons/react';
 

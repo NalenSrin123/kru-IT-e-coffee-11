@@ -6,41 +6,6 @@ import ProtectedRoute from "../../components/ProtectedRoute";
 import DashboardLayout from "../../dashboard/layouts/DashboardLayout";
 import Inventory from "../../dashboard/features/dashboard-overview/components/Inventory";
 
-// const adminRoutes = [
-//   {
-//     path: "/dashboard",
-//     element: (
-//       <ProtectedRoute>
-//         <DashboardOverview />
-//       </ProtectedRoute>
-//     ),
-//   },
-//   {
-//     path: "/users",
-//     element: (
-//       <ProtectedRoute>
-//         <UserManagement/>
-//       </ProtectedRoute>
-//     ),
-//   },
-//   {
-//     path: "/customers",
-//     element: (
-//       <ProtectedRoute>
-//         <CustomerLists/>
-//       </ProtectedRoute>
-//     ),
-//   },
-//   {
-//     path: "/menu",
-//     element: (
-//       <ProtectedRoute>
-//         <MenuManagement/>
-//       </ProtectedRoute>
-//     ),
-//   },
-// ];
-
 const adminRoutes = [
   {
     path: "/dashboard",
