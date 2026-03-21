@@ -15,7 +15,7 @@ const DashboardLayout = () => {
         <Topbar toggleSidebar={toggleSidebar} />
         
         {/* This Outlet is where Menu, Users, and Customers will appear */}
-        <div className="flex-1 overflow-y-auto p-4 md:p-8">
+        <div className="flex-1 overflow-y-auto p-4 md:p-0">
           <Outlet />
         </div>
       </main>

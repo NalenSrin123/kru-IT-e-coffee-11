@@ -2,18 +2,14 @@ import React, { useState } from 'react';
 
 // Sub-components
 import ListView from './components/ListView';
-import DetailView from './components/DetailView';
-import FormModal from './components/FormModal';
+import FormView from './components/FormView';
 import DeleteModal from './components/DeleteModal';
 
 const MenuManagement = () => {
-  // Navigation & View State
+  // Navigation: 'list' or 'form'
   const [view, setView] = useState('list');
+  const [isEdit, setIsEdit] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
-  
-  // Modal States
-  const [showAddModal, setShowAddModal] = useState(false);
-  const [showEditModal, setShowEditModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   // Form Management
@@ -42,8 +38,7 @@ const MenuManagement = () => {
       dateAdded: new Date().toISOString().split('T')[0] 
     };
     setMenuItems([...menuItems, newProduct]);
-    setShowAddModal(false);
-    setFormData(emptyForm);
+    setView('list');
   };
 
   // Logic: Edit
@@ -55,43 +50,45 @@ const MenuManagement = () => {
       : item
     );
     setMenuItems(updated);
-    setSelectedProduct({ ...formData, id: selectedProduct.id });
-    setShowEditModal(false);
+    setView('list');
   };
 
   // Logic: Delete
   const handleDeleteProduct = () => {
     setMenuItems(menuItems.filter(item => item.id !== selectedProduct.id));
     setShowDeleteModal(false);
-    setView('list');
   };
 
   return (
-    <div className="font-serif">
-      
+    <div className="font-serif min-h-screen bg-[#F9F6F2] p-4 md:p-8">
       {view === 'list' ? (
         <ListView 
           menuItems={menuItems} 
-          onAddNew={() => { setFormData(emptyForm); setShowAddModal(true); }} 
-          onViewDetail={(p) => { setSelectedProduct(p); setView('detail'); }} 
+          onAddNew={() => { 
+            setFormData(emptyForm); 
+            setIsEdit(false);
+            setView('form'); 
+          }} 
+          onEdit={(p) => { 
+            setSelectedProduct(p);
+            setFormData(p);
+            setIsEdit(true);
+            setView('form'); 
+          }} 
+          onDeleteClick={(p) => {
+            setSelectedProduct(p);
+            setShowDeleteModal(true);
+          }}
         />
       ) : (
-        <DetailView 
-          product={selectedProduct} 
+        <FormView 
+          isEdit={isEdit} 
+          formData={formData} 
+          setFormData={setFormData} 
           onBack={() => setView('list')} 
-          onEdit={() => { setFormData(selectedProduct); setShowEditModal(true); }} 
-          onDelete={() => setShowDeleteModal(true)} 
+          onSubmit={isEdit ? handleEditProduct : handleAddProduct} 
         />
       )}
-
-      <FormModal 
-        isOpen={showAddModal || showEditModal} 
-        isEdit={showEditModal} 
-        formData={formData} 
-        setFormData={setFormData} 
-        onClose={() => { setShowAddModal(false); setShowEditModal(false); }} 
-        onSubmit={showAddModal ? handleAddProduct : handleEditProduct} 
-      />
       
       <DeleteModal 
         isOpen={showDeleteModal} 
