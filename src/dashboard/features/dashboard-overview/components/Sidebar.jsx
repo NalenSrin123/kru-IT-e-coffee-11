@@ -1,11 +1,12 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom'; // Import these
 import { 
+  SquaresFour,
   Coffee, 
-  SquaresFour, 
-  Receipt, 
-  Warehouse, 
-  Users, 
+  UserList,     // Changed for Customers
+  Package,      // Changed for Inventory
+  UserGear,     // Changed for Admin Users
+  CookingPot,   // Changed for the Food/Drink Menu 
   X 
 } from '@phosphor-icons/react';
 
@@ -14,10 +15,10 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
 
   const menuItems = [
     { name: 'Dashboard', icon: SquaresFour, path: '/dashboard' },
-    { name: 'Customers', icon: Receipt, path: '/dashboard/customers' },
-    { name: 'Inventory', icon: Warehouse, path: '/dashboard/inventory' },
-    { name: 'Users', icon: Users, path: '/dashboard/users' },
-    { name: 'Menu', icon: Receipt, path: '/dashboard/menu' },
+    { name: 'Customers', icon: UserList, path: '/dashboard/customers' },
+    { name: 'Inventory', icon: Package, path: '/dashboard/inventory' },
+    { name: 'Users', icon: UserGear, path: '/dashboard/users' },
+    { name: 'Menu', icon: CookingPot, path: '/dashboard/menu' },
   ];
 
   return (
