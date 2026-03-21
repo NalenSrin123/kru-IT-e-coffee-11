@@ -39,15 +39,15 @@ const Topbar = ({ toggleSidebar }) => {
       
       <div className="flex items-center gap-3 md:gap-6">
         <div className="flex items-center gap-2 md:gap-4">
-          <button className="p-2 text-gray-400 hover:text-[#361205] hover:bg-[#F7F4E8] rounded-lg transition-all">
+          <button className="p-2 text-gray-400 hover:text-[#361205] hover:bg-[#F7F4E8] rounded-lg transition-all cursor-pointer">
             <Bell size={22} />
           </button>
-          <button className="p-2 text-gray-400 hover:text-[#361205] hover:bg-[#F7F4E8] rounded-lg transition-all">
+          <button className="p-2 text-gray-400 hover:text-[#361205] hover:bg-[#F7F4E8] rounded-lg transition-all cursor-pointer">
             <Gear size={22} />
           </button>
         </div>
 
-        <button className="flex items-center gap-2 text-sm font-semibold text-gray-600 hover:text-red-600 border-l pl-4 md:pl-6 border-gray-200 transition-colors">
+        <button className="flex items-center gap-2 text-sm font-semibold text-gray-600 hover:text-red-600 border-l pl-4 md:pl-6 border-gray-200 transition-colors cursor-pointer">
           <span className="hidden md:inline">Logout</span>
           <SignOut size={18} />
         </button>
