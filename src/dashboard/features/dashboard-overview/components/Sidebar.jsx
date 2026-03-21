@@ -33,7 +33,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
       {/* The Sidebar */}
       <aside className={`
         fixed inset-y-0 left-0 z-50 w-64 bg-white flex flex-col border-r border-gray-100 p-6 transition-transform duration-300 ease-in-out
-        xl:static xl:translate-x-0 
+        xl:translate-x-0 
         ${isOpen ? 'translate-x-0' : '-translate-x-full'}
       `}>
         {/* Brand Logo & Close Button */}
