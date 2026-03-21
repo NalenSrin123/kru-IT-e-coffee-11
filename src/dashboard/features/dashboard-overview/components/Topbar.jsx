@@ -9,7 +9,7 @@ import {
 
 const Topbar = ({ toggleSidebar }) => {
   return (
-    <header className="h-20 flex items-center justify-between px-4 md:px-8 bg-white/80 backdrop-blur-md border-b border-gray-100 shrink-0 z-10">
+    <header className="fixed top-0 left-0 right-0 xl:left-64 h-20 flex items-center justify-between px-4 md:px-8 bg-white backdrop-blur-md border-b border-gray-100 shrink-0 z-10">
       
       <div className="flex items-center gap-4 flex-1">
         <button 
