@@ -5,7 +5,7 @@ const FormView = ({ isEdit, formData, setFormData, onBack, onSubmit }) => {
   return (
     <div className="max-w-6xl mx-auto animate-in slide-in-from-right duration-500 space-y-6 pb-12">
       <button onClick={onBack} className="flex items-center gap-2 text-gray-400 hover:text-[#361205] font-bold text-sm transition-all group cursor-pointer">
-        <ArrowLeft size={18} weight="bold" className="group-hover:-translate-x-1 transition-transform" /> Back to Inventory
+        <ArrowLeft size={18} weight="bold" className="group-hover:-translate-x-1 transition-transform" /> Back to Menu Management
       </button>
 
       <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 mb-2">
