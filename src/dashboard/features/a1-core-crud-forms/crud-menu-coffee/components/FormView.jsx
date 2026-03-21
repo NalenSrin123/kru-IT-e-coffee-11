@@ -120,7 +120,7 @@ const FormView = ({ isEdit, formData, setFormData, onBack, onSubmit }) => {
               </div>
 
               <div className="md:col-span-2 space-y-1">
-                <label className="text-[10px] font-black text-[#361205]/60 uppercase tracking-widest ml-1">Product Narrative</label>
+                <label className="text-[10px] font-black text-[#361205]/60 uppercase tracking-widest ml-1">Product Description</label>
                 <textarea 
                   name="description" rows="4" value={formData.description} onChange={(e) => setFormData({...formData, description: e.target.value})}
                   placeholder="Describe flavor notes, origin, etc..." 
@@ -135,7 +135,7 @@ const FormView = ({ isEdit, formData, setFormData, onBack, onSubmit }) => {
               </button>
               <button type="submit" className="flex items-center justify-center gap-2 px-10 py-4 bg-[#361205] text-[#F7F4E8] rounded-2xl font-black text-[10px] uppercase tracking-widest shadow-xl hover:bg-[#4d1a07] transition-all cursor-pointer">
                 <FloppyDisk size={18} weight="bold" />
-                {!isEdit ? "Commit Product" : "Save Changes"}
+                {!isEdit ? "Create Product" : "Save Changes"}
               </button>
             </div>
           </div>
