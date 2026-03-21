@@ -27,7 +27,7 @@ const Topbar = ({ toggleSidebar }) => {
           />  
           <input 
             type="text" 
-            placeholder="Search analytics or orders..." 
+            placeholder="Search here..." 
             className="w-full bg-[#F7F4E8]/50 border-none rounded-lg py-2 pl-10 pr-4 text-sm focus:ring-1 focus:ring-[#361205]/20 outline-none"
           />
         </div>
