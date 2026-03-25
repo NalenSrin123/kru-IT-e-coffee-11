@@ -10,9 +10,8 @@ import { ProductProvider } from './context/products/ProductData.jsx'
 createRoot(document.getElementById('root')).render(
  
     <BrowserRouter>
-        <ProductProvider>
-            <App /> 
-        </ProductProvider>
+        <ProductProvider
+    <App /> 
     </BrowserRouter>
 
 )
