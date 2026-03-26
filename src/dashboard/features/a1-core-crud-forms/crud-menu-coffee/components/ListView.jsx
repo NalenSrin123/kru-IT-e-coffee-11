@@ -15,13 +15,13 @@ const ListView = ({ menuItems, onAddNew, onEdit, onDeleteClick }) => {
           className="flex items-center justify-center gap-2 bg-[#361205] text-white px-6 py-3 rounded-2xl font-bold text-sm shadow-xl hover:bg-[#4d1a07] transition-all cursor-pointer"
         >
           <Plus size={20} weight="bold" />
-          Add New Coffee
+          Add New Product
         </button>
       </div>
 
-      <div className="bg-white rounded-[2rem] md:rounded-4xl border border-gray-100 shadow-sm overflow-hidden">
+      <div className="bg-white rounded-4xl md:rounded-4xl border border-gray-100 shadow-sm overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="w-full text-left min-w-[800px] md:min-w-full">
+          <table className="w-full text-left min-w-200 md:min-w-full">
             <thead>
               <tr className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] bg-gray-50/50 border-b border-gray-100">
                 <th className="py-5 px-6">Product</th>
