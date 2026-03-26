@@ -35,7 +35,7 @@ const CustomerLists = () => {
 
   const filteredCustomers = useMemo(() => {
     return customers.filter((customer) => {
-      const matchesSearch = customer.name.toLowerCase().includes(searchTerm.toLowerCase()) || customer.email.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchesSearch = customer.name.toLowerCase().includes(searchTerm.toLowerCase()) || customer.email.toLowerCase().includes(searchTerm.toLowerCase()) || customer.phone.toLowerCase().includes(searchTerm.toLowerCase());
       const matchesStatus = statusFilter === "All" || customer.status === statusFilter.toUpperCase();
       return matchesSearch && matchesStatus;
     });
