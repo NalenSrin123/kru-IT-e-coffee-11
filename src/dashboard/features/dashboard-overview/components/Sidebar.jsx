@@ -1,11 +1,12 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom'; // Import these
 import { 
+  SquaresFour,
   Coffee, 
-  SquaresFour, 
-  Receipt, 
-  Warehouse, 
-  Users, 
+  UserList,     
+  Package,     
+  UserGear,     
+  CookingPot,   
   X 
 } from '@phosphor-icons/react';
 
@@ -14,10 +15,10 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
 
   const menuItems = [
     { name: 'Dashboard', icon: SquaresFour, path: '/dashboard' },
-    { name: 'Customers', icon: Receipt, path: '/dashboard/customers' },
-    { name: 'Inventory', icon: Warehouse, path: '/dashboard/inventory' },
-    { name: 'Users', icon: Users, path: '/dashboard/users' },
-    { name: 'Menu', icon: Receipt, path: '/dashboard/menu' },
+    { name: 'Customers', icon: UserList, path: '/dashboard/customers' },
+    { name: 'Inventory', icon: Package, path: '/dashboard/inventory' },
+    { name: 'Users', icon: UserGear, path: '/dashboard/users' },
+    { name: 'Menu', icon: CookingPot, path: '/dashboard/menu' },
   ];
 
   return (
@@ -33,7 +34,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
       {/* The Sidebar */}
       <aside className={`
         fixed inset-y-0 left-0 z-50 w-64 bg-white flex flex-col border-r border-gray-100 p-6 transition-transform duration-300 ease-in-out
-        xl:static xl:translate-x-0 
+        xl:translate-x-0 
         ${isOpen ? 'translate-x-0' : '-translate-x-full'}
       `}>
         {/* Brand Logo & Close Button */}

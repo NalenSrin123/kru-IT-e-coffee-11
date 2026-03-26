@@ -11,11 +11,11 @@ const DashboardLayout = () => {
     <div className="flex min-h-screen bg-[#F7F4E8] text-[#211B1D] font-serif overflow-hidden relative">
       <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
       
-      <main className="flex-1 flex flex-col min-w-0 overflow-hidden">
+      <main className="pt-20 xl:ml-64 flex-1 flex flex-col min-w-0 overflow-hidden">
         <Topbar toggleSidebar={toggleSidebar} />
         
         {/* This Outlet is where Menu, Users, and Customers will appear */}
-        <div className="flex-1 overflow-y-auto p-4 md:p-8">
+        <div className="flex-1 overflow-y-auto p-4 md:p-0">
           <Outlet />
         </div>
       </main>
