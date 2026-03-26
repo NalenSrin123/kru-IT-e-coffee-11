@@ -1,0 +1,14 @@
+import Home from "../pages/Home";
+import About from "../pages/About";
+import PaymentMethod from "../../dashboard/pages/users/components/PaymentMethod";
+import PaymentSuccess from "../../dashboard/pages/users/components/Paymentsuccess ";
+
+const webRoutes = [
+  { path: "/", element: <Home /> },
+  { path: "/about", element: <About /> },
+  {path:"/contact",ele}
+  {path: "/paymentmethod" , element: <PaymentMethod/>},
+  {path: "/paymentsuccess" ,element: <PaymentSuccess/>}
+];
+
+export default webRoutes;
