@@ -1,9 +1,34 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { ArrowLeft, CloudArrowUp, FloppyDisk, Camera, Info } from '@phosphor-icons/react';
 
 const FormView = ({ isEdit, formData, setFormData, onBack, onSubmit }) => {
+  const fileInputRef = useRef(null);
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setFormData({ ...formData, img: reader.result });
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const triggerFileInput = () => {
+    fileInputRef.current.click();
+  };
+
   return (
     <div className="max-w-6xl mx-auto animate-in slide-in-from-right duration-500 space-y-6 pb-12">
+      <input 
+        type="file" 
+        ref={fileInputRef} 
+        onChange={handleFileChange} 
+        accept="image/*" 
+        className="hidden" 
+      />
+
       {/* Top Navigation */}
       <button onClick={onBack} className="flex items-center gap-2 text-gray-400 hover:text-[#361205] font-bold text-sm transition-all group cursor-pointer">
         <ArrowLeft size={18} weight="bold" className="group-hover:-translate-x-1 transition-transform" /> Back to Menu Management
@@ -31,15 +56,19 @@ const FormView = ({ isEdit, formData, setFormData, onBack, onSubmit }) => {
           <div className="bg-white p-6 rounded-[2.5rem] shadow-sm border border-gray-100 sticky top-6">
             <h4 className="text-[15px] font-black text-[#361205]/40 uppercase tracking-[0.2em] mb-4 px-2">Visual Image</h4>
             
-            <div className="relative group w-full aspect-4/5 mb-6">
+            {/* Clickable Image Container */}
+            <div 
+              onClick={triggerFileInput}
+              className="relative group w-full aspect-4/5 mb-6 cursor-pointer overflow-hidden rounded-4xl"
+            >
               <img 
                 src={formData.img || "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=400"} 
-                className="w-full h-full object-cover rounded-4xl border-2 border-dashed border-gray-100 shadow-inner" 
+                className="w-full h-full object-cover border-2 border-dashed border-gray-100 shadow-inner group-hover:scale-105 transition-transform duration-500" 
                 alt="Preview" 
               />
-              <div className="absolute inset-0 bg-[#361205]/40 rounded-4xl opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center text-white p-4">
+              <div className="absolute inset-0 bg-[#361205]/40 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center text-white p-4">
                 <Camera size={32} weight="fill" />
-                <span className="text-[10px] font-bold uppercase mt-2">Change Image</span>
+                <span className="text-[10px] font-bold uppercase mt-2 text-center">Click to Upload from Device</span>
               </div>
             </div>
             
@@ -52,7 +81,14 @@ const FormView = ({ isEdit, formData, setFormData, onBack, onSubmit }) => {
                     placeholder="https://..." 
                     className="w-full bg-[#F7F4E8]/40 border border-[#361205]/10 rounded-xl p-3 text-xs focus:ring-2 focus:ring-[#361205]/20 focus:bg-white outline-none font-bold transition-all pr-10"
                   />
-                  <CloudArrowUp size={18} className="absolute right-3 top-2.5 text-[#361205]/40" />
+                  {/* Clickable Icon for Upload */}
+                  <button 
+                    type="button"
+                    onClick={triggerFileInput}
+                    className="absolute right-3 top-2.5 text-[#361205]/40 hover:text-[#361205] transition-colors cursor-pointer"
+                  >
+                    <CloudArrowUp size={18} weight="bold" />
+                  </button>
                 </div>
               </div>
 
