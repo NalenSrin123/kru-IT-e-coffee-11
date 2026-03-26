@@ -8,7 +8,7 @@ export default function Register() {
     name: "",
     email: "",
     password: "",
-    confirmPassword: ""
+    confirmPassword: "",
   });
 
   const handleChange = (e) => {
@@ -18,11 +18,42 @@ export default function Register() {
     });
   };
 
-  const handleSubmit = (e) => {
+  // ✅ UPDATED HANDLE SUBMIT WITH FETCH API
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
-    alert("Register Successful");
-    navigate("/login");
+
+    // check password match
+    if (formData.password !== formData.confirmPassword) {
+      alert("Password does not match!");
+      return;
+    }
+
+    try {
+      const res = await fetch("https://jsonplaceholder.typicode.com/users", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          password: formData.password,
+        }),
+      });
+
+      const data = await res.json();
+      console.log("Response:", data);
+
+      if (res.ok) {
+        alert("Register Successful ✅");
+        navigate("/login");
+      } else {
+        alert("Register Failed ❌");
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Error connecting to API ❌");
+    }
   };
 
   return (
