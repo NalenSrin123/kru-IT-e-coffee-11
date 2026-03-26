@@ -29,7 +29,7 @@ export default function Register() {
     }
 
     try {
-      const res = await fetch("https://jsonplaceholder.typicode.com/users", {
+      const res = await fetch("https://kru-it-e-coffee-intern-main-i74iel.laravel.cloud/api", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
