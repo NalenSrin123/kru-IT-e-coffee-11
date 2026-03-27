@@ -7,6 +7,7 @@ import ForgotPassword from "./services/auth/Forgotpassword";
 import PublicLayout from "./app/layouts/PublicLayout";
 import AuthLayout from "./app/layouts/AuthLayout";
 import Login from "./utils/Login";
+import DeleteProduct from "./services/api/DeleteProduct";
 
 const App = () => {
   return (
