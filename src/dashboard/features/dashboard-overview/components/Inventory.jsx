@@ -82,7 +82,7 @@ function Inventory() {
       .map((row) => row.join(","))
       .join("\n");
 
-    const blob = new Blob([csv], { type: "text/csv" });
+    const blob = new Blob([csv], { ty pe: "text/csv" });
     const url = URL.createObjectURL(blob);
 
     const a = document.createElement("a");
