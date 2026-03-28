@@ -10,6 +10,7 @@ const StatusBadge = ({ status }) => (
 const CustomerLists = () => {
   const navigate = useNavigate();
   const [customers, setCustomers] = useState([]);
+  let itemsPerPage=5;
   useEffect(() => {
     const savedData = localStorage.getItem('my_customer_list');
     if (savedData) {
@@ -191,13 +192,15 @@ const CustomerLists = () => {
                   onClick={() => setViewingCustomer(c)}
                   className="flex items-center justify-center gap-2 py-2.5 bg-stone-100 rounded-xl text-sm font-bold text-stone-700"
                 >
-                  <Eye size={16} /> View
+                  {/* <Eye size={16} />  */}
+                  View
                 </button>
                 <button 
                    onClick={() => setEditingCustomer({...c})}
                    className="flex items-center justify-center gap-2 py-2.5 bg-[#2D1B14] rounded-xl text-sm font-bold text-white"
                 >
-                  <Edit2 size={16} /> Edit
+                  {/* <Edit2 size={16} /> */}
+                   Edit
                 </button>
               </div>
             </div>
