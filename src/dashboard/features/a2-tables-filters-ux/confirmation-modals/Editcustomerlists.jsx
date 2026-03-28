@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { ArrowLeft, Check, Save } from 'lucide-react';
+import { ArrowLeft, Camera, Check, Save } from 'lucide-react';
 
 const Input = ({ label, value, onChange, type = "text" }) => (
   <div className="space-y-2">
@@ -71,7 +71,7 @@ export default function Editcustomerlist() {
               <div className="relative group">
                 <img 
                   src={`https://ui-avatars.com/api/?name=${formData.firstName}+${formData.lastName}&background=random&size=128`} 
-                  className="w-28 h-28 rounded-full border-4 border-white shadow-xl group-hover:opacity-80 transition-opacity" 
+                  className="w-28 h-28 rounded-full border-4 border-whinte shadow-xl group-hover:opacity-80 transition-opacity" 
                   alt="" 
                 />
                 {/* <div className="absolute bottom-1 right-1 p-2 bg-[#2D1B14] rounded-full text-white border-4 border-white">
