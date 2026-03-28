@@ -1,15 +1,18 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 
-export default function Register() {
+export default function FetchApiRegister() {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
-    confirmPassword: "",
+    confirmPassword: ""
   });
+
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     setFormData({
@@ -18,7 +21,6 @@ export default function Register() {
     });
   };
 
-  // ✅ UPDATED HANDLE SUBMIT WITH FETCH API
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -29,116 +31,106 @@ export default function Register() {
     }
 
     try {
-      const res = await fetch("https://kru-it-e-coffee-intern-main-i74iel.laravel.cloud/api", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          password: formData.password,
-        }),
-      });
+      setLoading(true);
 
-      const data = await res.json();
-      console.log("Response:", data);
+      const res = await fetch(
+        "https://kru-it-e-coffee-intern-main-i74iel.laravel.cloud/api/register",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            name: formData.name,
+            email: formData.email,
+            password: formData.password
+          })
+        }
+      );
 
       if (res.ok) {
         alert("Register Successful ✅");
         navigate("/login");
       } else {
+        const errorData = await res.json();
+        console.log("Backend error:", errorData);
         alert("Register Failed ❌");
       }
     } catch (error) {
-      console.error(error);
+      console.log("Network error:", error);
       alert("Error connecting to API ❌");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen w-full">
-      <div className="w-full max-w-md bg-gray-50 p-8 rounded-2xl shadow-lg">
-        
-        <h2 className="text-2xl font-bold text-center mb-6">
-          Create Account
+    <div className="min-h-screen flex items-center justify-center bg-gray-300">
+      <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="w-full max-w-md bg-white/20 backdrop-blur-lg p-8 rounded-3xl shadow-2xl"
+      >
+        <h2 className="text-3xl font-bold text-center mb-6">
+          Create Account ✨
         </h2>
 
         <form onSubmit={handleSubmit} className="space-y-4">
+          <input
+            type="text"
+            name="name"
+            placeholder="Full Name"
+            onChange={handleChange}
+            className="w-full px-4 py-3 rounded-xl"
+            required
+          />
 
-          <div>
-            <label className="block text-sm font-medium mb-1">
-              Full Name
-            </label>
-            <input
-              type="text"
-              name="name"
-              placeholder="Enter your name"
-              onChange={handleChange}
-              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-              required
-            />
-          </div>
+          <input
+            type="email"
+            name="email"
+            placeholder="Email Address"
+            onChange={handleChange}
+            className="w-full px-4 py-3 rounded-xl"
+            required
+          />
 
-          <div>
-            <label className="block text-sm font-medium mb-1">
-              Email
-            </label>
-            <input
-              type="email"
-              name="email"
-              placeholder="Enter your email"
-              onChange={handleChange}
-              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-              required
-            />
-          </div>
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            onChange={handleChange}
+            className="w-full px-4 py-3 rounded-xl"
+            required
+          />
 
-          <div>
-            <label className="block text-sm font-medium mb-1">
-              Password
-            </label>
-            <input
-              type="password"
-              name="password"
-              placeholder="Enter password"
-              onChange={handleChange}
-              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-              required
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium mb-1">
-              Confirm Password
-            </label>
-            <input
-              type="password"
-              name="confirmPassword"
-              placeholder="Confirm password"
-              onChange={handleChange}
-              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-              required
-            />
-          </div>
+          <input
+            type="password"
+            name="confirmPassword"
+            placeholder="Confirm Password"
+            onChange={handleChange}
+            className="w-full px-4 py-3 rounded-xl"
+            required
+          />
 
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition"
+            disabled={loading}
+            className="w-full bg-blue-600 text-white py-3 rounded-xl hover:bg-blue-700 transition"
           >
-            Register
+            {loading ? "Creating..." : "Register 🚀"}
           </button>
-
         </form>
 
-        <p className="text-sm text-center mt-4">
+        <p className="text-center mt-4 text-sm">
           Already have an account?
-          <Link className="text-blue-500 ml-1 underline" to="/login">
+          <span
+            onClick={() => navigate("/login")}
+            className="underline cursor-pointer ml-1"
+          >
             Login
-          </Link>
+          </span>
         </p>
-
-      </div>
+      </motion.div>
     </div>
   );
 }
