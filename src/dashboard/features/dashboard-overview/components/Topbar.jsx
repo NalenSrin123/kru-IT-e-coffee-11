@@ -9,7 +9,7 @@ import {
 
 const Topbar = ({ toggleSidebar }) => {
   return (
-    <header className="h-20 flex items-center justify-between px-4 md:px-8 bg-white/80 backdrop-blur-md border-b border-gray-100 shrink-0 z-10">
+    <header className="fixed top-0 left-0 right-0 xl:left-64 h-20 flex items-center justify-between px-4 md:px-8 bg-white backdrop-blur-md border-b border-gray-100 shrink-0 z-10">
       
       <div className="flex items-center gap-4 flex-1">
         <button 
@@ -27,7 +27,7 @@ const Topbar = ({ toggleSidebar }) => {
           />  
           <input 
             type="text" 
-            placeholder="Search analytics or orders..." 
+            placeholder="Search here..." 
             className="w-full bg-[#F7F4E8]/50 border-none rounded-lg py-2 pl-10 pr-4 text-sm focus:ring-1 focus:ring-[#361205]/20 outline-none"
           />
         </div>
@@ -39,15 +39,15 @@ const Topbar = ({ toggleSidebar }) => {
       
       <div className="flex items-center gap-3 md:gap-6">
         <div className="flex items-center gap-2 md:gap-4">
-          <button className="p-2 text-gray-400 hover:text-[#361205] hover:bg-[#F7F4E8] rounded-lg transition-all">
+          <button className="p-2 text-gray-400 hover:text-[#361205] hover:bg-[#F7F4E8] rounded-lg transition-all cursor-pointer">
             <Bell size={22} />
           </button>
-          <button className="p-2 text-gray-400 hover:text-[#361205] hover:bg-[#F7F4E8] rounded-lg transition-all">
+          <button className="p-2 text-gray-400 hover:text-[#361205] hover:bg-[#F7F4E8] rounded-lg transition-all cursor-pointer">
             <Gear size={22} />
           </button>
         </div>
 
-        <button className="flex items-center gap-2 text-sm font-semibold text-gray-600 hover:text-red-600 border-l pl-4 md:pl-6 border-gray-200 transition-colors">
+        <button className="flex items-center gap-2 text-sm font-semibold text-gray-600 hover:text-red-600 border-l pl-4 md:pl-6 border-gray-200 transition-colors cursor-pointer">
           <span className="hidden md:inline">Logout</span>
           <SignOut size={18} />
         </button>

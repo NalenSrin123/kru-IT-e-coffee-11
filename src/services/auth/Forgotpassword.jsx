@@ -55,6 +55,7 @@ function ForgotPassword() {
             Back to Login
           </a>
         </div>
+
       </div>
     </div>
   );
