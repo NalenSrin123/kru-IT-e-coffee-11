@@ -1,6 +1,96 @@
-import React from "react";
+import React, { useState } from "react";
 
 function Inventory() {
+  const [page, setPage] = useState(1);
+  const itemsPerPage = 4;
+
+  const products = [
+    { id: 1, name: "Coffe Cups", sku: "001", img: "https://png.pngtree.com/png-clipart/20250226/original/pngtree-blank-take-away-single-coffee-cups-png-image_20517194.png", category: "Whole Bean", price: 18.5, availability: ["Available", "Uptown"], status: "In Stock" },
+    { id: 2, name: "Coffee Straws,", sku: "002", img: "https://i5.walmartimages.com/seo/100pcs-Coffee-Straws-7-Inch-Two-Hole-Coffee-Straw-Stirrer-Coffee-Straws-Coffee-Stirrers-Individually-Wrapped-Cocktail-Stirrers-Straws-Disposable-Plas_1dd978cd-bdfe-4b52-8da1-ce38995441c5.ef8ec94737aba3d55307e6ff64156cdb.jpeg", category: "Espresso", price: 12.5, availability: ["Available"], status: "Low Stock" },
+    { id: 3, name: "The best milk choice for baristas", sku: "003", img: "https://lovegrown.com/cdn/shop/files/LoveGrown_WholeBean_withbeans.jpg?v=1763155675&width=1946", category: "Seasonal", price: 20.5, availability: ["All Branches"], status: "Out of Stock" },
+    { id: 4, name: "Condensed milk", sku: "004", img: "https://www.costco.co.uk/medias/sys_master/images/hdd/h81/223812750475294.jpg", category: "Whole Bean", price: 8.5, availability: ["Uptown", "Suburbs"], status: "In Stock" },
+    { id: 5, name: "Brown Sugar Sticks 1000 ", sku: "001", img: "https://www.discountcoffee.co.uk/cdn/shop/files/fairtradebrownsugar_grande.png?v=1739285167", category: "Whole Bean", price: 18.5, availability: ["Available", "Uptown"], status: "In Stock" },
+    { id: 6, name: "ICETEC", sku: "002", img: "https://icetec.co.nz/cdn/shop/products/728754288_1.jpg?v=1663817641&width=1214", category: "Espresso", price: 12.5, availability: ["Available"], status: "Low Stock" },
+    { id: 7, name: "Drink Containers Bags", sku: "003", img: "https://images-eu.ssl-images-amazon.com/images/I/71TsdyewwJL._AC_UL495_SR435,495_.jpg", category: "Seasonal", price: 20.5, availability: ["All Branches"], status: "Out of Stock" },
+    { id: 8, name: "Paper Card board", sku: "004", img: "https://www.newgreenpackaging.com/uploads/p129.jpg", category: "Whole Bean", price: 18.5, availability: ["Uptown", "Suburbs"], status: "In Stock" },
+  ];
+
+  // ✅ STATES
+  const [productList, setProductList] = useState(products);
+  const [showForm, setShowForm] = useState(false);
+  const [filterStatus, setFilterStatus] = useState("All");
+  const [search, setSearch] = useState("");
+
+  const [newProduct, setNewProduct] = useState({
+    name: "",
+    img: "",
+    price: "",
+    status: "In Stock",
+  });
+
+  // ✅ FILTER + SEARCH LOGIC
+  const filteredData = productList.filter((item) => {
+    const matchStatus =
+      filterStatus === "All" || item.status === filterStatus;
+
+    const matchSearch =
+      item.name.toLowerCase().includes(search.toLowerCase()) ||
+      item.sku.toLowerCase().includes(search.toLowerCase()) ||
+      item.category.toLowerCase().includes(search.toLowerCase());
+
+    return matchStatus && matchSearch;
+  });
+
+  const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+  const start = (page - 1) * itemsPerPage;
+  const currentData = filteredData.slice(start, start + itemsPerPage);
+
+  // ✅ HANDLERS
+  const handleChange = (e) => {
+    setNewProduct({
+      ...newProduct,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleAddProduct = () => {
+    const newItem = {
+      id: productList.length + 1,
+      sku: "NEW",
+      category: "Custom",
+      availability: ["Available"],
+      ...newProduct,
+    };
+
+    setProductList([...productList, newItem]);
+    setShowForm(false);
+
+    setNewProduct({
+      name: "",
+      img: "",
+      price: "",
+      status: "In Stock",
+    });
+  };
+
+  // ✅ EXPORT
+  const handleExport = () => {
+    const csv = [
+      ["Name", "Price", "Status"],
+      ...filteredData.map((item) => [item.name, item.price, item.status]),
+    ]
+      .map((row) => row.join(","))
+      .join("\n");
+
+    const blob = new Blob([csv], { type: "text/csv" });
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "coffee_inventory.csv";
+    a.click();
+  };
+
   return (
     <div className="flex flex-col lg:flex-row min-h-screen bg-gray-100">
 
@@ -9,17 +99,24 @@ function Inventory() {
 
         {/* Header */}
         <div className="bg-white flex flex-col sm:flex-row items-center justify-between px-3 sm:px-6 h-auto sm:h-14">
-          
+          {/* 🔍 SEARCH */}
           <input
             type="text"
             placeholder="Search Coffee..."
+            value={search}
+            onChange={(e) => {
+              setSearch(e.target.value);
+              setPage(1);
+            }}
             className="bg-gray-100 px-4 py-1 rounded-3xl w-full sm:w-60 mt-2 sm:mt-0"
           />
 
-          <button className="bg-orange-500 text-white px-4 py-1 rounded-2xl mt-2 sm:mt-0 hover:bg-gray-400 duration-300">
-            + Add New User
+          <button
+            onClick={() => setShowForm(true)}
+            className="bg-orange-500 text-white px-4 py-1 rounded-2xl mt-2 sm:mt-0 hover:bg-gray-400 duration-300"
+          >
+            + Add New Luggage
           </button>
-
         </div>
 
         {/* Title */}
@@ -32,36 +129,39 @@ function Inventory() {
           </div>
 
           <div className="flex gap-2">
-            <button className="bg-white px-4 py-2 rounded-xl hover:bg-gray-200">
-              Filter
+            <button
+              onClick={() => {
+                const next =
+                  filterStatus === "All"
+                    ? "In Stock"
+                    : filterStatus === "In Stock"
+                    ? "Low Stock"
+                    : filterStatus === "Low Stock"
+                    ? "Out of Stock"
+                    : "All";
+
+                setFilterStatus(next);
+                setPage(1);
+              }}
+              className="bg-white px-4 py-2 rounded-xl hover:bg-gray-200"
+            >
+              Change Stock: {filterStatus}
             </button>
-            <button className="bg-white px-4 py-2 rounded-xl hover:bg-gray-200">
+
+            <button
+              onClick={handleExport}
+              className="bg-white px-4 py-2 rounded-xl hover:bg-gray-200"
+            >
               Export
             </button>
           </div>
         </div>
 
-        {/* Category Buttons */}
-        <div className="flex flex-wrap gap-2 px-3 sm:px-6 mt-4">
-          <button className="bg-orange-500 text-white px-4 py-1 rounded-xl  hover:bg-gray-400 duration-300">
-            All product
-          </button>
-          <button className="bg-white px-4 py-1 rounded-xl hover:bg-gray-200">
-            Espresso
-          </button>
-          <button className="bg-white px-4 py-1 rounded-xl hover:bg-gray-200">
-            Whole Bean
-          </button>
-          <button className="bg-white px-4 py-1 rounded-xl hover:bg-gray-200">
-            Seasonal
-          </button>
-        </div>
-
         {/* Table */}
         <div className="px-3 sm:px-6 mt-4 overflow-x-auto">
-          <table className="min-w-[700px] w-full bg-white rounded-lg ">
+          <table className="min-w-[700px] w-full bg-white rounded-lg">
             <thead>
-              <tr className="bg-orange-100 text-left hover:bg-white duration-300">
+              <tr className="bg-orange-100 text-left">
                 <th className="p-3">Product</th>
                 <th>Category</th>
                 <th>Price</th>
@@ -72,184 +172,97 @@ function Inventory() {
             </thead>
 
             <tbody>
-              <tr className="border-b border-gray-200 hover:bg-gray-200 duration-300">
-                <td className="p-3 flex items-center gap-3">
-                  <img
-                    src="https://img.freepik.com/free-photo/latte-coffee_1122-2728.jpg"
-                    className="w-12 h-12 rounded"
-                  />
-                  <div>
-                    <p className="font-bold">Cortado</p>
-                    <p className="text-xs text-gray-400">SKU:001</p>
-                  </div>
-                </td>
-
-                <td className="text-gray-500">Whole Bean</td>
-                <td className="font-bold">$18.50</td>
-
-                <td>
-                  <div className="flex flex-wrap gap-1">
-                    <span className="bg-green-200 text-green-700 text-xs px-2 py-1 rounded">
-                     Available
-                    </span>
-                    <span className="bg-green-200 text-green-700 text-xs px-2 py-1 rounded">
-                      Uptown
-                    </span>
-                  </div>
-                </td>
-
-                <td className="text-green-600 font-bold">
-                  <div className="text-green-600 font-bold flex"> 
-                  <p className="flex gap-2">
-                  <p className="bg-green-600 w-3 rounded-2xl text-center h-3 mt-2"></p>In Stock</p> </div></td>
-                <td>-</td>
-              </tr>
-
-               <tr className="border-b border-gray-200 hover:bg-gray-200 duration-300">
-                <td className="p-3 flex items-center gap-3">
-                  <img
-                    src="https://frostingandfettuccine.com/wp-content/uploads/2022/12/Caramel-Iced-Coffee-6.jpg"
-                    className="w-12 h-12 rounded"
-                  />
-                  <div>
-                    <p className="font-bold">Caramel iced Coffee</p>
-                    <p className="text-xs text-gray-400">SKU:002</p>
-                  </div>
-                </td>
-
-                <td className="text-gray-500">Espresso</td>
-                <td className="font-bold">$12.50</td>
-
-                <td>
-                  <div className="flex flex-wrap gap-1">
-                    <span className="bg-green-200 text-green-700 text-xs px-2 py-1 rounded">
-                      Available
-                    </span>
-                  </div>
-                </td>
-
-                <td className="text-yellow-300 font-bold">
-                  <div className=" flex"> 
-                  <p className="flex gap-2">
-                  <p className="bg-yellow-300 w-3 rounded-2xl text-center h-3 mt-2"></p>Low Stock
-                  </p>
-                  </div>
+              {currentData.map((item) => (
+                <tr key={item.id} className="border-b hover:bg-gray-100">
+                  <td className="p-3 flex items-center gap-3">
+                    <img src={item.img} className="w-16 h-16 rounded" />
+                    <div>
+                      <p className="font-bold">{item.name}</p>
+                      <p className="text-xs text-gray-400">SKU:{item.sku}</p>
+                    </div>
                   </td>
-                <td>-</td>
-              </tr>
 
-               <tr className="border-b border-gray-200 hover:bg-gray-200 duration-300">
-                <td className="p-3 flex items-center gap-3">
-                  <img
-                    src="https://www.sugarsalted.com/wp-content/uploads/2024/06/ice-cream-iced-coffee-whipped-cream-0081.jpg"
-                    className="w-12 h-12 rounded"
-                  />
-                  <div>
-                    <p className="font-bold">Ice cream Coffee</p>
-                    <p className="text-xs text-gray-400">SKU:003</p>
-                  </div>
-                </td>
+                  <td className="text-gray-500">{item.category}</td>
+                  <td className="font-bold">${item.price}</td>
 
-                <td className="text-gray-500">Seasonal</td>
-                <td className="font-bold">$20.50</td>
+                  <td>
+                    <div className="flex gap-1 flex-wrap">
+                      {item.availability.map((a, i) => (
+                        <span key={i} className="bg-green-200 text-green-700 text-xs px-2 py-1 rounded">
+                          {a}
+                        </span>
+                      ))}
+                    </div>
+                  </td>
 
-                <td>
-                  <div className="flex flex-wrap gap-1">
-                    <span className="bg-green-200 text-green-700 text-xs px-2 py-1 rounded">
-                     All Branches
-                    </span>
-                  </div>
-                </td>
+                  <td className="font-bold">
+                    <div className="flex gap-2 items-center">
+                      <span
+                        className={`w-3 h-3 rounded ${
+                          item.status === "In Stock"
+                            ? "bg-green-600"
+                            : item.status === "Low Stock"
+                            ? "bg-yellow-400"
+                            : "bg-gray-400"
+                        }`}
+                      ></span>
+                      {item.status}
+                    </div>
+                  </td>
 
-                <td>
-                  <div className=" text-gray-400 font-bold flex"> 
-                  <p className="flex gap-2">
-                  <p className="bg-gray-400 w-3 rounded-2xl text-center h-3 mt-2"></p>Out of Stock</p>
-                  </div></td>
-                <td>-</td>
-              </tr>
-
-               <tr className="border-b border-gray-200git  hover:bg-gray-200 duration-300">
-                <td className="p-3 flex items-center gap-3">
-                  <img
-                    src="https://www.nescafe.com/za/sites/default/files/2024-11/NES_SBU_Recipes%202024_Website_Caramel%20Ice%20Coffee_Hero%20Banner_1066x1066.jpg"
-                    className="w-12 h-12 rounded"
-                  />
-                  <div>
-                    <p className="font-bold">Cream Coffee</p>
-                    <p className="text-xs text-gray-400">SKU:004</p>
-                  </div>
-                </td>
-
-                <td className="text-gray-500">Whole Bean</td>
-                <td className="font-bold">$8.50</td>
-
-                <td>
-                  <div className="flex flex-wrap gap-1">
-                    <span className="bg-green-200 text-green-700 text-xs px-2 py-1 rounded">
-                       Uptown
-                    </span>
-                    <span className="bg-green-200 text-green-700 text-xs px-2 py-1 rounded">
-                      Suburbs
-                    </span>
-                  </div>
-                </td>
-
-                <td className="text-green-600 font-bold">
-                  <div className="text-green-600 font-bold flex"> 
-                  <p className="flex gap-2">
-                  <p className="bg-green-600 w-3 rounded-2xl text-center h-3 mt-2"></p>In Stock</p>
-                  </div>
-                </td>
-                <td>-</td>
-              </tr>
+                  <td>-</td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>
 
         {/* Pagination */}
         <div className="flex justify-center mt-4 gap-2">
-          <button className="bg-white w-8 h-8 rounded hover:bg-orange-500 hover:text-white duration-300">
-            1
-          </button>
-          <button className="bg-white w-8 h-8 rounded hover:bg-orange-500 hover:text-white duration-300">
-            2
-          </button>
-          <button className="bg-white w-8 h-8 rounded hover:bg-orange-500 hover:text-white duration-300">
-            3
-          </button>
+          {Array.from({ length: totalPages }, (_, i) => i + 1).map((num) => (
+            <button
+              key={num}
+              onClick={() => setPage(num)}
+              className={`w-8 h-8 rounded ${
+                page === num
+                  ? "bg-orange-500 text-white"
+                  : "bg-white hover:bg-orange-500 hover:text-white"
+              }`}
+            >
+              {num}
+            </button>
+          ))}
         </div>
-
-        {/* Stats */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 px-3 sm:px-6 mt-6 mb-6">
-
-          <div className="bg-white p-4 rounded shadow">
-            <p className="text-gray-500 text-sm">TOTAL SKU</p>
-            <h2 className="text-2xl font-bold">128</h2>
-            <p className="text-green-600 text-sm">+12% this month</p>
-          </div>
-
-          <div className="bg-white p-4 rounded shadow">
-            <p className="text-gray-500 text-sm">LOW STOCK</p>
-            <h2 className="text-2xl font-bold">34</h2>
-            <p className="text-yellow-500 text-sm">Needs attention</p>
-          </div>
-
-          <div className="bg-white p-4 rounded shadow">
-            <p className="text-gray-500 text-sm">STOCK VALUE</p>
-            <h2 className="text-2xl font-bold">$42,780</h2>
-            <p className="text-gray-400 text-sm">Updated 2h ago</p>
-          </div>
-
-          <div className="bg-white p-4 rounded shadow">
-            <p className="text-gray-500 text-sm">AVG MARGIN</p>
-            <h2 className="text-2xl font-bold">65%</h2>
-            <p className="text-orange-500 text-sm">Above target</p>
-          </div>
-
-        </div>
-
       </div>
+
+      {/* MODAL */}
+      {showForm && (
+        <div className="fixed inset-0 bg-gray-500 bg-opacity-0 flex justify-center items-center">
+          <div className="bg-white p-6 rounded-xl w-80 shadow-lg">
+            <h2 className="text-lg font-bold mb-4">Add New Product</h2>
+
+            <input type="text" name="name" placeholder="Product Name" value={newProduct.name} onChange={handleChange} className="w-full mb-2 p-2 border rounded" />
+            <input type="text" name="img" placeholder="Image URL" value={newProduct.img} onChange={handleChange} className="w-full mb-2 p-2 border rounded" />
+            <input type="number" name="price" placeholder="Price" value={newProduct.price} onChange={handleChange} className="w-full mb-2 p-2 border rounded" />
+
+            <select name="status" value={newProduct.status} onChange={handleChange} className="w-full mb-4 p-2 border rounded">
+              <option>In Stock</option>
+              <option>Low Stock</option>
+              <option>Out of Stock</option>
+            </select>
+
+            <div className="flex justify-between">
+              <button onClick={() => setShowForm(false)} className="px-4 py-1 bg-gray-300 rounded">
+                Cancel
+              </button>
+
+              <button onClick={handleAddProduct} className="px-4 py-1 bg-orange-500 text-white rounded">
+                Add
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
