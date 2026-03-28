@@ -1,3 +1,6 @@
+<<<<<<< HEAD
+
+=======
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 
@@ -61,3 +64,4 @@ const App = () => {
 };
 
 export default App;
+>>>>>>> f065e2a23e614f0199b14ceda508b84d847930b0
