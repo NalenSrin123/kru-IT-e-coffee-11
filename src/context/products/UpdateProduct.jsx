@@ -4,8 +4,29 @@ function UpdateProduct() {
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
 
+  const updateProduct = async (id, productData) => {
+    try {
+      const response = await fetch(
+        `https://kru-it-e-coffee-intern-main-i74iel.laravel.cloud/api/v1/products/${id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify(productData),
+        }
+      );
+
+      const data = await response.json();
+      console.log("Updated:", data);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
   const handleUpdate = async () => {
-    const id = 1; // 👉 replace with dynamic ID
+    const id = 1; // change dynamic later
 
     const productData = {
       name: name,
