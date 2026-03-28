@@ -8,6 +8,7 @@ import OtpPage from "./services/auth/OtpPage";
 import AuthLayout from "./app/layouts/AuthLayout";
 import ResetPassword from "./services/auth/Comfirm_rest_pw";
 import Login from "./utils/Login";
+import DeleteProduct from "./services/api/DeleteProduct";
 import adminRoutes from "./app/router/admin";
 import webRoutes from "./app/router/web";
 
