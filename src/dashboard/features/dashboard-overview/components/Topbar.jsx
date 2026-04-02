@@ -11,24 +11,30 @@ import {
 const Topbar = ({ toggleSidebar }) => {
   const navigate = useNavigate();
 
-  const handleLogout = () => {
+  // ✅ LOGOUT FUNCTION (WITH API)
+  const handleLogout = async () => {
     try {
-      console.log("Logout clicked");
+      const token = localStorage.getItem("token");
 
-      // remove all auth data
-      localStorage.removeItem("token");
-      localStorage.removeItem("user");
+      await fetch("https://kru-it-e-coffee-intern-main-i74iel.laravel.cloud/api/logout", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: "application/json",
+        },
+      });
 
-      // redirect to login
-      navigate("/login");
+      console.log("Logout API success");
 
     } catch (error) {
-      console.log("Logout error:", error);
-
-      // fallback logout
-      localStorage.clear();
-      navigate("/login");
+      console.log("Logout API failed, but continuing logout", error);
     }
+
+    // ✅ ALWAYS logout frontend
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+
+    navigate("/login");
   };
 
   return (
@@ -39,7 +45,6 @@ const Topbar = ({ toggleSidebar }) => {
         <button 
           onClick={toggleSidebar} 
           className="xl:hidden p-2 text-[#361205] hover:bg-[#F7F4E8] rounded-lg transition-colors"
-          aria-label="Open Menu"
         >
           <List size={26} weight="bold" />
         </button>
@@ -55,10 +60,6 @@ const Topbar = ({ toggleSidebar }) => {
             className="w-full bg-[#F7F4E8]/50 border-none rounded-lg py-2 pl-10 pr-4 text-sm focus:ring-1 focus:ring-[#361205]/20 outline-none"
           />
         </div>
-
-        <button className="sm:hidden p-2 text-gray-400">
-          <MagnifyingGlass size={22} />
-        </button>
       </div>
       
       {/* RIGHT SIDE */}
@@ -77,7 +78,7 @@ const Topbar = ({ toggleSidebar }) => {
         {/* LOGOUT BUTTON */}
         <button 
           onClick={handleLogout}
-          className="flex items-center gap-2 text-sm font-semibold text-gray-600 hover:text-red-600 border-l pl-4 md:pl-6 border-gray-200 transition-colors cursor-pointer"
+          className="flex items-center gap-2 text-sm font-semibold text-gray-600 hover:text-red-600 border-l pl-4 md:pl-6 border-gray-200 transition-colors"
         >
           <span className="hidden md:inline">Logout</span>
           <SignOut size={18} />
