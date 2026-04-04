@@ -1,0 +1,26 @@
+[33mcommit 8dda6e7197307cd2d0f3abb8c254ed5a91562fff[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mDesign_Login_Page[m[33m, [m[1;31morigin/Design_Login_Page[m[33m)[m
+Merge: 2a6f546 f7fef48
+Author: Nalen Srin <161912473+NalenSrin123@users.noreply.github.com>
+Date:   Fri Mar 6 14:10:09 2026 +0700
+
+    Merge pull request #3 from NalenSrin123/Design_Sidebar
+    
+    Design_Sidebar
+
+[33mcommit f7fef4887c4ed9ec4d3e89805a3587219e01ecde[m[33m ([m[1;31morigin/Design_Sidebar[m[33m)[m
+Author: Linda <meym5913@gmail.com>
+Date:   Fri Mar 6 12:45:18 2026 +0700
+
+    Design_Sidebar
+
+[33mcommit 2a6f546d4400f84b3e19871d7b98c3aa5176ddc0[m[33m ([m[1;31morigin/Setup_tailwind[m[33m)[m
+Author: NalenSrin123 <srinnalen@gmail.com>
+Date:   Sat Feb 28 12:18:20 2026 +0700
+
+    Setup Tailwind
+
+[33mcommit 49b7c4e995adb74cac9491d3a29aa127edaa91f3[m[33m ([m[1;32mmain[m[33m)[m
+Author: KR-ISCODE <krisjenxz@gmail.com>
+Date:   Sun Feb 15 15:09:21 2026 +0700
+
+    Initial project structure for E-Coffee internship architecture
