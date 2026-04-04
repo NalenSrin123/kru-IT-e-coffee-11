@@ -10,7 +10,8 @@ const roleBadge = {
 
 const Avatar = ({ user }) => (
   <div
-    className="w-8 h-8 rounded-full flex items-center justify-center text-white text-[10px] font-bold shrink-0 shadow-sm"
+    className="w-8 h-8 rounded-full flex items-center justify-center
+               text-white text-[10px] font-bold shrink-0 shadow-sm"
     style={{ backgroundColor: user.color || '#361205' }}
   >
     {user.initials}
@@ -32,7 +33,8 @@ const UserTable = ({
             <select
               value={roleFilter}
               onChange={(e) => onRoleFilter(e.target.value)}
-              className="flex-1 sm:w-32 border border-gray-200 rounded-lg px-3 py-2 text-xs font-semibold focus:ring-2 focus:ring-orange-200"
+              className="flex-1 sm:w-32 border border-gray-200 rounded-lg px-3 
+                py-2 text-xs font-semibold focus:ring-2 focus:ring-stone-600 focus:outline-none"
             >
               <option>All Roles</option>
               {ROLES.map((r) => <option key={r}>{r}</option>)}
@@ -41,7 +43,8 @@ const UserTable = ({
             <select
               value={statusFilter}
               onChange={(e) => onStatusFilter(e.target.value)}
-              className="flex-1 sm:w-32 border border-gray-200 rounded-lg px-3 py-2 text-xs font-semibold focus:ring-2 focus:ring-orange-200"
+              className="flex-1 sm:w-32 border border-gray-200 rounded-lg px-3 
+                py-2 text-xs font-semibold focus:ring-2 focus:ring-stone-600 focus:outline-none"
             >
               <option>All Status</option>
               <option>Active</option>
@@ -56,7 +59,7 @@ const UserTable = ({
 
       {/* TABLE WRAPPER - Horizontal Scroll enabled */}
       <div className="overflow-x-auto">
-        <table className="w-full text-sm min-w-[700px]">
+        <table className="w-full text-sm min-w-175">
           <thead className="bg-gray-50/50">
             <tr className="text-left">
               <th className="py-4 px-6 text-[10px] font-bold text-gray-400 uppercase tracking-widest">User</th>
@@ -93,10 +96,12 @@ const UserTable = ({
                   </td>
                   <td className="py-4 px-6 text-right">
                     <div className="flex justify-end gap-2">
-                      <button onClick={() => onEdit(user)} className="p-2 text-gray-400 hover:text-blue-500 hover:bg-blue-50 rounded-lg transition">
+                      <button onClick={() => onEdit(user)} className="p-2 text-gray-400 hover:text-blue-500
+                                                               hover:bg-blue-50 rounded-lg transition">
                         <RiEditLine size={16} />
                       </button>
-                      <button onClick={() => onDelete(user.id)} className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition">
+                      <button onClick={() => onDelete(user.id)} className="p-2 text-gray-400 hover:text-red-500
+                                                                   hover:bg-red-50 rounded-lg transition">
                         <RiDeleteBinLine size={16} />
                       </button>
                     </div>
