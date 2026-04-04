@@ -20,6 +20,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
     { name: 'Users', icon: UserGear, path: '/dashboard/users' },
     { name: 'Menu', icon: CookingPot, path: '/dashboard/menu' },
     { name: 'Category', icon: CookingPot, path: '/dashboard/category' },
+    { name: 'Feedback', icon: CookingPot, path: '/dashboard/feedback' },
   ];
 
   return (
