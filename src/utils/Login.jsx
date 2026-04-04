@@ -20,38 +20,36 @@ function Login() {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    try {
-      const res = await fetch(
-        "https://kru-it-e-coffee-intern-main-i74iel.laravel.cloud/api/login",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        }
-      );
-
-      const result = await res.json();
-
-      if (res.ok) {
-        // save token (if have)
-        localStorage.setItem("token", result.token);
-
-        setMessage("✅ Login success");
-
-        // go to next page
-        navigate("/");
-      } else {
-        setMessage(result.message || "❌ Login failed");
+  try {
+    const res = await fetch(
+      "https://kru-it-e-coffee-intern-main-i74iel.laravel.cloud/api/login",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
       }
-    } catch (error) {
-      setMessage("❌ Server error");
-      console.log(error);
+    );
+
+    const result = await res.json();
+
+    console.log(res.status, result); // 👈 debug
+
+    if (res.ok) {
+      localStorage.setItem("token", result.token);
+      setMessage(" Login success");
+      navigate("/");
+    } else {
+      setMessage(result.message || "Login failed");
     }
-  };
+  } catch (error) {
+    console.log(error);
+    setMessage("Server error");
+  }
+};
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100 px-4">
