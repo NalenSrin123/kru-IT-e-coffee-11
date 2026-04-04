@@ -1,9 +1,8 @@
-import React from "react";
 import { Routes, Route } from "react-router-dom";
 import FetchApiRegister from "./services/auth/FetchApiRegister.jsx";
 
 // import Register from "./services/auth/register";
-
+import ForgotPassword from "./services/auth/Forgotpassword";
 import PublicLayout from "./app/layouts/PublicLayout";
 import OtpPage from "./services/auth/OtpPage";
 import AuthLayout from "./app/layouts/AuthLayout";
@@ -13,7 +12,6 @@ import OtpDesign from "./services/auth/OtpPage";
 import DeleteProduct from "./services/api/DeleteProduct";
 import adminRoutes from "./app/router/admin";
 import webRoutes from "./app/router/web";
-import ForgotPassword from "./services/auth/Forgotpassword.jsx";
 
 const App = () => {
   return (
@@ -21,53 +19,50 @@ const App = () => {
       {/* Public Pages */}
       <Route element={<PublicLayout />}>
         {webRoutes.map((route, index) => (
-          <Route
-            key={index}
-            path={route.path === "/" ? undefined : route.path}
-            index={route.path === "/"}
-            element={route.element}
+          <Route 
+            key={index} 
+            path={route.path === "/" ? undefined : route.path} 
+            index={route.path === "/"} 
+            element={route.element} 
           />
         ))}
-      </Route>
+      </Route> 
 
       {/* Auth Pages */}
-      <Route element={<AuthLayout />}>
-        <Route path="/login" element={<Login />} />
+      <Route
+        element={<AuthLayout />}
+      >
+      
+        <Route path="/login" element={<Login/>} />
         {/* <Route path="/register" element={<Register />} /> */}
         <Route path="/otpage" element={<OtpPage />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/otpdesign" element={<OtpDesign />}></Route>
+        <Route path="/otpdesign" element={<OtpDesign/>}></Route>
         {/* <Route path="/" element={<FetchApiRegister />} /> */}
-        <Route path="/register" element={<FetchApiRegister />} />
+      <Route path="/register" element={<FetchApiRegister />} /> 
         <Route path="/reset-password" element={<ResetPassword />} />
       </Route>
 
       {/* Dashboard / Admin Routes  */}
       {adminRoutes.map((route, index) => (
-        <Route key={index} path={route.path} element={route.element}>
-          {route.children &&
-            route.children.map((child, childIndex) => (
-              <Route
-                key={childIndex}
-                path={child.path}
-                index={child.index}
-                element={child.element}
-              >
-                {child.children &&
-                  child.children.map((subChild, subIndex) => (
-                    <Route
-                      key={subIndex}
-                      path={subChild.path}
-                      index={subChild.index}
-                      element={subChild.element}
-                    />
-                  ))}
-              </Route>
-            ))}
-        </Route>
-      ))}
+  <Route key={index} path={route.path} element={route.element}>
+    {route.children && route.children.map((child, childIndex) => (
+      <Route key={childIndex} path={child.path} index={child.index} element={child.element}>
+        {/* បន្ថែមផ្នែកនេះ ដើម្បីឱ្យវាស្គាល់ addUser ដែលនៅក្នុង users */}
+        {child.children && child.children.map((subChild, subIndex) => (
+          <Route 
+            key={subIndex} 
+            path={subChild.path} 
+            index={subChild.index} 
+            element={subChild.element} 
+          />
+        ))}
+      </Route>
+    ))}
+  </Route>
+))}
     </Routes>
   );
-};
+}
 
 export default App;

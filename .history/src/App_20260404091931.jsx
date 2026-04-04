@@ -1,4 +1,3 @@
-import React from "react";
 import { Routes, Route } from "react-router-dom";
 import FetchApiRegister from "./services/auth/FetchApiRegister.jsx";
 
@@ -35,7 +34,7 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         {/* <Route path="/register" element={<Register />} /> */}
         <Route path="/otpage" element={<OtpPage />} />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/forgot-password" element={<ForgotPassword/>} />
         <Route path="/otpdesign" element={<OtpDesign />}></Route>
         {/* <Route path="/" element={<FetchApiRegister />} /> */}
         <Route path="/register" element={<FetchApiRegister />} />

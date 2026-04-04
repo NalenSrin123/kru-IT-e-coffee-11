@@ -53,7 +53,6 @@ const UserManagement = ({onAddUser}) => {
 
           <div className="flex gap-2">
         <Link
-          to="addUser"
           className="flex items-center gap-2 bg-[#361205] hover:bg-[#4d1a08] text-white text-sm font-semibold p-2 md:px-4 md:py-2 rounded-xl transition-all shadow-md"
         >
           <RiUserAddLine className="text-lg" />

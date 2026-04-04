@@ -1,19 +1,17 @@
-import React from "react";
 import { Routes, Route } from "react-router-dom";
 import FetchApiRegister from "./services/auth/FetchApiRegister.jsx";
 
 // import Register from "./services/auth/register";
-
+import ForgotPassword from "./services/auth/ForgotPassword";
 import PublicLayout from "./app/layouts/PublicLayout";
 import OtpPage from "./services/auth/OtpPage";
 import AuthLayout from "./app/layouts/AuthLayout";
-import ResetPassword from "./services/auth/Comfirm_rest_pw";
+import ResetPassword from "./services/auth/Comfirm_reset_pw";
 import Login from "./utils/Login";
 import OtpDesign from "./services/auth/OtpPage";
 import DeleteProduct from "./services/api/DeleteProduct";
 import adminRoutes from "./app/router/admin";
 import webRoutes from "./app/router/web";
-import ForgotPassword from "./services/auth/Forgotpassword.jsx";
 
 const App = () => {
   return (

@@ -249,7 +249,15 @@ function Login() {
         setMessage("✅ Login success");
 
         // go to next page
-        navigate("/otpdesign");
+        // navigate("/otpdesign");
+        const role=result.data.user.role.name;
+        if(role=='Customer'){
+          navigate("/");
+        }else{
+          navigate("/dashboard");
+        }
+        
+        
       } else {
         setMessage(result.message || "❌ Login failed");
       }
