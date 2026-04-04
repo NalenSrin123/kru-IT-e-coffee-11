@@ -19,6 +19,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
     { name: 'Inventory', icon: Package, path: '/dashboard/inventory' },
     { name: 'Users', icon: UserGear, path: '/dashboard/users' },
     { name: 'Menu', icon: CookingPot, path: '/dashboard/menu' },
+    { name: 'Category', icon: CookingPot, path: '/dashboard/category' },
   ];
 
   return (
