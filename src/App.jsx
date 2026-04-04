@@ -1,3 +1,4 @@
+import React from "react";
 import { Routes, Route } from "react-router-dom";
 import FetchApiRegister from "./services/auth/FetchApiRegister.jsx";
 
