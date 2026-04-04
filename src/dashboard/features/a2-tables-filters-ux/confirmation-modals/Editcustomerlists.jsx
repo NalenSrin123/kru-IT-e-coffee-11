@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { ArrowLeft, Camera, Check, Save } from 'lucide-react';
+import { ArrowLeft, Check, Save } from 'lucide-react';
 
 const Input = ({ label, value, onChange, type = "text" }) => (
   <div className="space-y-2">

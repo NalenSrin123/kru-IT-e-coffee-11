@@ -5,9 +5,9 @@ import { ProductContext } from '../../../../../context/products/ProductData';
 
 const ListView = ({ onAddNew, onEdit, onDeleteClick }) => {
 
-  const { products, loading } = useContext(ProductContext);
+  const { products = [], loading } = useContext(ProductContext);
 
-  console.log("Products:", products); 
+  console.log("Products:", products);
 
   if (loading) {
     return <p className="text-center py-10">Loading...</p>;
@@ -52,7 +52,7 @@ const ListView = ({ onAddNew, onEdit, onDeleteClick }) => {
             </thead>
 
             <tbody>
-              {products && products.length > 0 ? (
+              {Array.isArray(products) && products.length > 0 ? (
                 products.map(item => (
                   <tr key={item.id} className="border-b hover:bg-gray-50">
 
