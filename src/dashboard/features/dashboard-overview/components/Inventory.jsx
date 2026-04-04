@@ -15,29 +15,28 @@ function Inventory() {
     { id: 8, name: "Paper Card board", sku: "004", img: "https://www.newgreenpackaging.com/uploads/p129.jpg", category: "Whole Bean", price: 18.5, availability: ["Uptown", "Suburbs"], status: "In Stock" },
   ];
 
-  // ✅ STATES
+  // STATES
   const [productList, setProductList] = useState(products);
   const [showForm, setShowForm] = useState(false);
   const [filterStatus, setFilterStatus] = useState("All");
   const [search, setSearch] = useState("");
+  const [isEditing, setIsEditing] = useState(false);
 
   const [newProduct, setNewProduct] = useState({
+    id: null,
     name: "",
     img: "",
     price: "",
     status: "In Stock",
   });
 
-  // ✅ FILTER + SEARCH LOGIC
+  //  FILTER + SEARCH LOGIC
   const filteredData = productList.filter((item) => {
-    const matchStatus =
-      filterStatus === "All" || item.status === filterStatus;
-
+    const matchStatus = filterStatus === "All" || item.status === filterStatus;
     const matchSearch =
       item.name.toLowerCase().includes(search.toLowerCase()) ||
       item.sku.toLowerCase().includes(search.toLowerCase()) ||
       item.category.toLowerCase().includes(search.toLowerCase());
-
     return matchStatus && matchSearch;
   });
 
@@ -45,7 +44,6 @@ function Inventory() {
   const start = (page - 1) * itemsPerPage;
   const currentData = filteredData.slice(start, start + itemsPerPage);
 
-  // ✅ HANDLERS
   const handleChange = (e) => {
     setNewProduct({
       ...newProduct,
@@ -53,27 +51,42 @@ function Inventory() {
     });
   };
 
-  const handleAddProduct = () => {
-    const newItem = {
-      id: productList.length + 1,
-      sku: "NEW",
-      category: "Custom",
-      availability: ["Available"],
-      ...newProduct,
-    };
-
-    setProductList([...productList, newItem]);
-    setShowForm(false);
-
-    setNewProduct({
-      name: "",
-      img: "",
-      price: "",
-      status: "In Stock",
-    });
+  const openAddModal = () => {
+    setIsEditing(false);
+    setNewProduct({ name: "", img: "", price: "", status: "In Stock" });
+    setShowForm(true);
   };
 
-  // ✅ EXPORT
+  const openEditModal = (product) => {
+    setIsEditing(true);
+    setNewProduct(product);
+    setShowForm(true);
+  };
+
+  const handleSaveProduct = () => {
+    if (isEditing) {
+      // UPDATE
+      setProductList(productList.map(p => p.id === newProduct.id ? newProduct : p));
+    } else {
+      // ADD
+      const newItem = {
+        ...newProduct,
+        id: Date.now(), // Better than length for unique IDs
+        sku: "NEW-" + Math.floor(Math.random() * 1000),
+        category: "Custom",
+        availability: ["Available"],
+      };
+      setProductList([...productList, newItem]);
+    }
+    setShowForm(false);
+  };
+
+  const handleDelete = (id) => {
+    if (window.confirm("Are you sure you want to delete this item?")) {
+      setProductList(productList.filter((item) => item.id !== id));
+    }
+  };
+
   const handleExport = () => {
     const csv = [
       ["Name", "Price", "Status"],
@@ -82,9 +95,8 @@ function Inventory() {
       .map((row) => row.join(","))
       .join("\n");
 
-    const blob = new Blob([csv], { ty pe: "text/csv" });
+    const blob = new Blob([csv], { type: "text/csv" });
     const url = URL.createObjectURL(blob);
-
     const a = document.createElement("a");
     a.href = url;
     a.download = "coffee_inventory.csv";
@@ -92,137 +104,113 @@ function Inventory() {
   };
 
   return (
-    <div className="flex flex-col lg:flex-row min-h-screen bg-gray-100">
-
+    <div className="flex flex-col lg:flex-row min-h-screen bg-gray-100 font-sans">
       {/* Sidebar */}
       <div className="hidden lg:flex flex-col w-64 bg-white border-r">
         <div className="p-6 font-bold text-lg">E-Coffee Admin</div>
-
         <nav className="flex flex-col gap-2 px-4">
-          <a className="p-2 hover:bg-gray-100 rounded">Dashboard</a>
-          <a className="p-2 bg-orange-100 text-orange-600 rounded">Inventory</a>
-          <a className="p-2 hover:bg-gray-100 rounded">Customer</a>
-          <a className="p-2 hover:bg-gray-100 rounded">Analytics</a>
+          <a className="p-2 hover:bg-gray-100 rounded cursor-pointer">Dashboard</a>
+          <a className="p-2 bg-orange-100 text-orange-600 rounded cursor-pointer">Inventory</a>
+          <a className="p-2 hover:bg-gray-100 rounded cursor-pointer">Customer</a>
+          <a className="p-2 hover:bg-gray-100 rounded cursor-pointer">Analytics</a>
         </nav>
       </div>
 
       {/* Main */}
       <div className="flex-1">
-
         {/* Header */}
-        <div className="bg-white flex flex-col sm:flex-row items-center justify-between px-3 sm:px-6 h-auto sm:h-14">
-          {/* 🔍 SEARCH */}
+        <div className="bg-white flex flex-col sm:flex-row items-center justify-between px-3 sm:px-6 py-4 sm:h-14 border-b">
           <input
             type="text"
             placeholder="Search Coffee..."
             value={search}
-            onChange={(e) => {
-              setSearch(e.target.value);
-              setPage(1);
-            }}
-            className="bg-gray-100 px-4 py-1 rounded-3xl w-full sm:w-60 mt-2 sm:mt-0"
+            onChange={(e) => { setSearch(e.target.value); setPage(1); }}
+            className="bg-gray-100 px-4 py-1 rounded-3xl w-full sm:w-60"
           />
-
           <button
-            onClick={() => setShowForm(true)}
-            className="bg-orange-500 text-white px-4 py-1 rounded-2xl mt-2 sm:mt-0 hover:bg-gray-400 duration-300"
+            onClick={openAddModal}
+            className="bg-orange-500 text-white px-4 py-1 rounded-2xl mt-2 sm:mt-0 hover:bg-orange-600 duration-300"
           >
-            + Add New Luggage
+            + Add Luggage
           </button>
         </div>
 
-        {/* Title */}
+        {/* Title Section */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center px-3 sm:px-6 mt-4 gap-3">
           <div>
-            <h1 className="text-xl sm:text-2xl font-bold">Coffee Inventory</h1>
-            <p className="text-sm text-gray-500">
-              Manage your coffee products pricing and availability.
-            </p>
+            <h1 className="text-xl sm:text-2xl font-bold text-gray-800">Coffee Inventory</h1>
+            <p className="text-sm text-gray-500">Manage your coffee products pricing and availability.</p>
           </div>
-
           <div className="flex gap-2">
             <button
               onClick={() => {
-                const next =
-                  filterStatus === "All"
-                    ? "In Stock"
-                    : filterStatus === "In Stock"
-                    ? "Low Stock"
-                    : filterStatus === "Low Stock"
-                    ? "Out of Stock"
-                    : "All";
-
-                setFilterStatus(next);
+                const stages = ["All", "In Stock", "Low Stock", "Out of Stock"];
+                const idx = stages.indexOf(filterStatus);
+                setFilterStatus(stages[(idx + 1) % stages.length]);
                 setPage(1);
               }}
-              className="bg-white px-4 py-2 rounded-xl hover:bg-gray-200"
+              className="bg-white border px-4 py-2 rounded-xl hover:bg-gray-50 text-sm"
             >
-              Change Stock: {filterStatus}
+              Filter: <span className="font-bold">{filterStatus}</span>
             </button>
-
-            <button
-              onClick={handleExport}
-              className="bg-white px-4 py-2 rounded-xl hover:bg-gray-200"
-            >
-              Export
+            <button onClick={handleExport} className="bg-white border px-4 py-2 rounded-xl hover:bg-gray-50 text-sm">
+              Export CSV
             </button>
           </div>
         </div>
 
         {/* Table */}
-        <div className="px-3 sm:px-6 mt-4 overflow-x-auto">
-          <table className="min-w-[700px] w-full bg-white rounded-lg">
+        <div className="px-3 sm:px-6 mt-6 overflow-x-auto">
+          <table className="min-w-[800px] w-full bg-white rounded-xl shadow-sm overflow-hidden">
             <thead>
-              <tr className="bg-orange-100 text-left">
-                <th className="p-3">Product</th>
-                <th>Category</th>
-                <th>Price</th>
-                <th>Availability</th>
-                <th>Status</th>
-                <th>Action</th>
+              <tr className="bg-gray-50 text-left border-b">
+                <th className="p-4 text-sm font-semibold text-gray-600">Product</th>
+                <th className="p-4 text-sm font-semibold text-gray-600">Category</th>
+                <th className="p-4 text-sm font-semibold text-gray-600">Price</th>
+                <th className="p-4 text-sm font-semibold text-gray-600">Availability</th>
+                <th className="p-4 text-sm font-semibold text-gray-600">Status</th>
+                <th className="p-4 text-sm font-semibold text-gray-600 text-center">Edits</th>
               </tr>
             </thead>
-
             <tbody>
               {currentData.map((item) => (
-                <tr key={item.id} className="border-b hover:bg-gray-100">
-                  <td className="p-3 flex items-center gap-3">
-                    <img src={item.img} className="w-16 h-16 rounded" />
+                <tr key={item.id} className="border-b last:border-0 hover:bg-gray-50 transition-colors">
+                  <td className="p-4 flex items-center gap-3">
+                    <img src={item.img} className="w-12 h-12 rounded-lg object-cover border" alt={item.name} />
                     <div>
-                      <p className="font-bold">{item.name}</p>
-                      <p className="text-xs text-gray-400">SKU:{item.sku}</p>
+                      <p className="font-bold text-gray-800">{item.name}</p>
+                      <p className="text-xs text-gray-400 uppercase">SKU: {item.sku}</p>
                     </div>
                   </td>
-
-                  <td className="text-gray-500">{item.category}</td>
-                  <td className="font-bold">${item.price}</td>
-
-                  <td>
+                  <td className="p-4 text-gray-600 text-sm">{item.category}</td>
+                  <td className="p-4 font-bold text-gray-800">${item.price}</td>
+                  <td className="p-4">
                     <div className="flex gap-1 flex-wrap">
                       {item.availability.map((a, i) => (
-                        <span key={i} className="bg-green-200 text-green-700 text-xs px-2 py-1 rounded">
+                        <span key={i} className="bg-blue-50 text-blue-600 text-[10px] px-2 py-0.5 rounded-full border border-blue-100">
                           {a}
                         </span>
                       ))}
                     </div>
                   </td>
-
-                  <td className="font-bold">
-                    <div className="flex gap-2 items-center">
-                      <span
-                        className={`w-3 h-3 rounded ${
-                          item.status === "In Stock"
-                            ? "bg-green-600"
-                            : item.status === "Low Stock"
-                            ? "bg-yellow-400"
-                            : "bg-gray-400"
-                        }`}
-                      ></span>
+                  <td className="p-4">
+                    <div className="flex items-center gap-2 text-sm font-medium">
+                      <span className={`w-2 h-2 rounded-full ${
+                        item.status === "In Stock" ? "bg-green-500" : item.status === "Low Stock" ? "bg-yellow-500" : "bg-red-400"
+                      }`}></span>
                       {item.status}
                     </div>
                   </td>
-
-                  <td>-</td>
+                  <td className="p-4">
+                    <div className="flex justify-center gap-3">
+                      <button onClick={() => openEditModal(item)} className="text-blue-500 hover:text-blue-700 font-medium text-sm">
+                        Update
+                      </button>
+                      <button onClick={() => handleDelete(item.id)} className="text-red-500 hover:text-red-700 font-medium text-sm">
+                        Delete
+                      </button>
+                    </div>
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -230,15 +218,13 @@ function Inventory() {
         </div>
 
         {/* Pagination */}
-        <div className="flex justify-center mt-4 gap-2">
+        <div className="flex justify-center my-8 gap-2">
           {Array.from({ length: totalPages }, (_, i) => i + 1).map((num) => (
             <button
               key={num}
               onClick={() => setPage(num)}
-              className={`w-8 h-8 rounded ${
-                page === num
-                  ? "bg-orange-500 text-white"
-                  : "bg-white hover:bg-orange-500 hover:text-white"
+              className={`w-10 h-10 rounded-lg font-medium transition-all ${
+                page === num ? "bg-orange-500 text-white shadow-md" : "bg-white border hover:bg-gray-50"
               }`}
             >
               {num}
@@ -247,29 +233,43 @@ function Inventory() {
         </div>
       </div>
 
-      {/* MODAL */}
+      {/* MODAL (ADD / UPDATE) */}
       {showForm && (
-        <div className="fixed inset-0 bg-gray-500 bg-opacity-0 flex justify-center items-center">
-          <div className="bg-white p-6 rounded-xl w-80 shadow-lg">
-            <h2 className="text-lg font-bold mb-4">Add New Product</h2>
+        <div className="fixed inset-0 bg-black bg-opacity-40 backdrop-blur-sm flex justify-center items-center z-50">
+          <div className="bg-white p-8 rounded-2xl w-96 shadow-2xl animate-in fade-in zoom-in duration-200">
+            <h2 className="text-xl font-bold mb-6 text-gray-800">
+              {isEditing ? "Update Product" : "Add New Product"}
+            </h2>
 
-            <input type="text" name="name" placeholder="Product Name" value={newProduct.name} onChange={handleChange} className="w-full mb-2 p-2 border rounded" />
-            <input type="text" name="img" placeholder="Image URL" value={newProduct.img} onChange={handleChange} className="w-full mb-2 p-2 border rounded" />
-            <input type="number" name="price" placeholder="Price" value={newProduct.price} onChange={handleChange} className="w-full mb-2 p-2 border rounded" />
+            <div className="space-y-4">
+              <div>
+                <label className="text-xs font-bold text-gray-500 uppercase">Product Name</label>
+                <input type="text" name="name" value={newProduct.name} onChange={handleChange} className="w-full mt-1 p-2 border rounded-lg focus:ring-2 focus:ring-orange-200 outline-none" />
+              </div>
+              <div>
+                <label className="text-xs font-bold text-gray-500 uppercase">Image URL</label>
+                <input type="text" name="img" value={newProduct.img} onChange={handleChange} className="w-full mt-1 p-2 border rounded-lg focus:ring-2 focus:ring-orange-200 outline-none" />
+              </div>
+              <div>
+                <label className="text-xs font-bold text-gray-500 uppercase">Price ($)</label>
+                <input type="number" name="price" value={newProduct.price} onChange={handleChange} className="w-full mt-1 p-2 border rounded-lg focus:ring-2 focus:ring-orange-200 outline-none" />
+              </div>
+              <div>
+                <label className="text-xs font-bold text-gray-500 uppercase">Stock Status</label>
+                <select name="status" value={newProduct.status} onChange={handleChange} className="w-full mt-1 p-2 border rounded-lg focus:ring-2 focus:ring-orange-200 outline-none">
+                  <option>In Stock</option>
+                  <option>Low Stock</option>
+                  <option>Out of Stock</option>
+                </select>
+              </div>
+            </div>
 
-            <select name="status" value={newProduct.status} onChange={handleChange} className="w-full mb-4 p-2 border rounded">
-              <option>In Stock</option>
-              <option>Low Stock</option>
-              <option>Out of Stock</option>
-            </select>
-
-            <div className="flex justify-between">
-              <button onClick={() => setShowForm(false)} className="px-4 py-1 bg-gray-300 rounded">
+            <div className="flex justify-end gap-3 mt-8">
+              <button onClick={() => setShowForm(false)} className="px-5 py-2 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors">
                 Cancel
               </button>
-
-              <button onClick={handleAddProduct} className="px-4 py-1 bg-orange-500 text-white rounded">
-                Add
+              <button onClick={handleSaveProduct} className="px-5 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 shadow-md transition-all">
+                {isEditing ? "Update Item" : "Create Item"}
               </button>
             </div>
           </div>

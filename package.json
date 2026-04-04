@@ -16,6 +16,7 @@
     "react": "^19.2.0",
     "react-chartjs-2": "^5.3.1",
     "react-dom": "^19.2.0",
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 
     "react-router-dom": "^7.13.1",
@@ -25,6 +26,10 @@
 =======
     "react-icons": "^5.6.0",
 >>>>>>> Stashed changes
+=======
+    "react-icons": "^5.6.0",
+    "react-router-dom": "^7.13.1",
+>>>>>>> 0b53e156f1b511e871af1f8c5b041bf0862ec400
     "react-simple-typewriter": "^5.0.1"
   },
   "devDependencies": {
