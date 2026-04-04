@@ -12,6 +12,7 @@ import OtpDesign from "./services/auth/OtpPage";
 import DeleteProduct from "./services/api/DeleteProduct";
 import adminRoutes from "./app/router/admin";
 import webRoutes from "./app/router/web";
+import Navbar from "./components/Navbar.jsx";
 
 const App = () => {
   return (
@@ -32,7 +33,7 @@ const App = () => {
       <Route
         element={<AuthLayout />}
       >
-      
+      <Route path="/navbar" element={<Navbar/>}/>
         <Route path="/login" element={<Login/>} />
         {/* <Route path="/register" element={<Register />} /> */}
         <Route path="/otpage" element={<OtpPage />} />

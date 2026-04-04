@@ -6,7 +6,7 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false)
   const navigate = useNavigate();
   return (
-    <nav className='w-full bg-white text-gray-200 sticky top-0 z-100 shadow-md bg-gradient-to-t py-1 from-orange-950 to-orange-950/50  border-b border-white ' >
+    <nav className='w-full bg-white text-gray-200 sticky top-0 z-100 shadow-md bg-gradient-to-top py-1 from-orange-950 to-orange-950/50  border-b border-white ' >
       <div className='max-w-7xl mx-auto px-6'>
         <div className='flex items-center justify-between h-16'>
 
@@ -60,8 +60,8 @@ const Navbar = () => {
         </ul>
 
           {/* Logo */}
-          <Link to="/" className='w-14 rounded-full p-[1px] bg-amber-50'>
-            <img className='w-[100%] h-[100%] object-contain' src={logo} alt='Logo' />
+          <Link to="/" className='w-14 rounded-full p-1px bg-amber-50'>
+            <img className='w-full h-full object-contain' src={logo} alt='Logo' />
           </Link>
 
           {/* Right Menu - Desktop */}
