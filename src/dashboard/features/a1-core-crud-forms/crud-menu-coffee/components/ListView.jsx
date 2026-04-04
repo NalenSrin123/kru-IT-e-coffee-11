@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { Plus, PencilSimple, Trash } from '@phosphor-icons/react';
 import { getStockStatus, getStockColor } from '../utils/helpers';
 import { ProductContext } from '../../../../../context/products/ProductData';
+import DeleteProduct from '../../../../../services/api/DeleteProduct';
 
 const ListView = ({ onAddNew, onEdit, onDeleteClick }) => {
 
@@ -100,7 +101,8 @@ const ListView = ({ onAddNew, onEdit, onDeleteClick }) => {
                         </button>
 
                         <button 
-                          onClick={() => onDeleteClick(item)}
+                          onClick={() => DeleteProduct(item.id)}
+
                           className="p-2 hover:bg-red-500 hover:text-white rounded"
                         >
                           <Trash size={18} />
