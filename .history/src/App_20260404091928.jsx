@@ -12,7 +12,6 @@ import OtpDesign from "./services/auth/OtpPage";
 import DeleteProduct from "./services/api/DeleteProduct";
 import adminRoutes from "./app/router/admin";
 import webRoutes from "./app/router/web";
-import ForgotPassword from "./services/auth/Forgotpassword.jsx";
 
 const App = () => {
   return (
@@ -34,7 +33,7 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         {/* <Route path="/register" element={<Register />} /> */}
         <Route path="/otpage" element={<OtpPage />} />
-        <Route path="/forgot-password" element={<ForgotPassword/>} />
+        <Route path="/forgot-password" element={<ForgotP} />
         <Route path="/otpdesign" element={<OtpDesign />}></Route>
         {/* <Route path="/" element={<FetchApiRegister />} /> */}
         <Route path="/register" element={<FetchApiRegister />} />
