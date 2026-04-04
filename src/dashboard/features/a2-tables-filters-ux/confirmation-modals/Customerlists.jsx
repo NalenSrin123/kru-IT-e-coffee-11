@@ -6,10 +6,12 @@ const StatusBadge = ({ status }) => (
   <span className={`text-[10px] font-black px-2.5 py-1 rounded-md border tracking-wider ${status === 'ACTIVE' ? "bg-green-50 text-green-700 border-green-100" : "bg-stone-100 text-stone-500 border-stone-200"}`}>
     {status}
   </span>
+
 );
 const CustomerLists = () => {
   const navigate = useNavigate();
   const [customers, setCustomers] = useState([]);
+  const [status, setStatus] = useState("loading"); // ✅ MUST exist
   // let itemsPerPage=5;
   useEffect(() => {
     const savedData = localStorage.getItem('my_customer_list');
@@ -52,7 +54,37 @@ const CustomerLists = () => {
     localStorage.removeItem('my_customer_list');
     window.location.reload();
   };
+   // ✅ FETCH DATA
+   useEffect(() => {
+    const fetchCustomers = async () => {
+      try {
+        console.log("Fetching...");
 
+        const response = await fetch(
+          "https://kru-it-e-coffee-intern-main-i74iel.laravel.cloud/api/v1/customers"
+        );
+
+        console.log("Status Code:", response.status);
+
+        if (!response.ok) {
+          throw new Error("API failed");
+        }
+
+        const data = await response.json();
+
+        console.log("API RESPONSE:", data);
+        const customersArray = data.data?.data || [];
+
+        setCustomers(customersArray);
+        setStatus("success");
+      } catch (err) {
+        console.error("Fetch error:", err);
+        setStatus("error");
+      }
+    };
+
+    fetchCustomers();
+  }, []);
   return (
     <div className="p-4 md:p-8 bg-[#F9F6F2] min-h-screen font-sans text-[#2D241E]">
       <div className="max-w-6xl mx-auto">
