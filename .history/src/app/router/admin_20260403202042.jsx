@@ -5,8 +5,6 @@ import MenuManagement from "../../dashboard/features/a1-core-crud-forms/crud-men
 import ProtectedRoute from "../../components/ProtectedRoute";
 import DashboardLayout from "../../dashboard/layouts/DashboardLayout";
 import Inventory from "../../dashboard/features/dashboard-overview/components/Inventory";
-import AddUser from "../../dashboard/features/dashboard-overview/components/AddUser";
-
 
 const adminRoutes = [
   {
@@ -19,16 +17,11 @@ const adminRoutes = [
     ),
     children: [
       { index: true, element: <DashboardOverview /> }, 
-     { 
-        path: "users", 
-        children: [
-          { index: true, element: <UserManagement /> }, // ទំព័រតារាងបញ្ជីឈ្មោះ
-          { path: "addUser", element: <AddUser /> }     // ទំព័រថែម User (Page ថ្មី)
-        ]
-      },
+      { path: "users", element: <UserManagement /> }, 
       { path: "customers", element: <CustomerLists /> }, 
       { path: "menu", element: <MenuManagement /> }, 
       { path: "inventory", element: <Inventory/> }, 
+      { path: ""}
     ],
   },
 ];

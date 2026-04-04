@@ -29,6 +29,7 @@ const adminRoutes = [
       { path: "customers", element: <CustomerLists /> }, 
       { path: "menu", element: <MenuManagement /> }, 
       { path: "inventory", element: <Inventory/> }, 
+      { path: "addUser" , element: <AddUser/>}
     ],
   },
 ];
