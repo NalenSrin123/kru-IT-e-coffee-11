@@ -102,7 +102,7 @@ const CustomerLists = () => {
         {/* Header Section */}
         <header className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
           <div>
-            <h1 className="text-2xl md:text-3xl font-bold text-[#2D1B14]">Customer Database</h1>
+            <h1 className="text-2xl md:text-3xl font-bold text-[#2D1B14]">Customerlists</h1>
             <p className="text-stone-500 text-sm">Manage your member database and status</p>
           </div>
         </header>
@@ -171,7 +171,7 @@ const CustomerLists = () => {
                     </td>
                     <td className="px-6 py-4 text-right">
                       <button 
-                        onClick={() => navigate(`/edit/${c.id}`)} 
+                        onClick={() => navigate(`/dashboard/customers/edit/${c.id}`)} 
                         className="inline-flex items-center gap-2 px-4 py-2 bg-white hover:bg-[#2D1B14] text-stone-600 hover:text-white rounded-lg transition-all text-xs font-bold border border-stone-200 shadow-sm"
                       >
                         <Edit2 size={14} /> Edit
@@ -196,7 +196,7 @@ const CustomerLists = () => {
                     </div>
                   </div>
                   <button 
-                    onClick={() => navigate(`/edit/${c.id}`)}
+                    onClick={() => navigate(`/dashboard/customers/edit/${c.id}`)}
                     className="p-2 text-stone-400 border border-stone-100 rounded-lg"
                   >
                     <Edit2 size={18} />
