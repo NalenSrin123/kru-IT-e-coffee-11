@@ -74,7 +74,7 @@ const MenuPage = () => {
         <div className="lg:col-span-3 ">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {products.map((item) => (
-              <Link to="/detail" key={item.id} className="bg-white p-6 rounded-2xl overflow-hidden  shadow-sm hover:shadow-xl transition-all group border border-transparent hover:border-amber-100">
+              <Link to={`/detail/${item.id}`} key={item.id} className="bg-white p-6 rounded-2xl overflow-hidden  shadow-sm hover:shadow-xl transition-all group border border-transparent hover:border-amber-100">
                 <div className="relative h-56  rounded-2xl overflow-hidden">
                   <img src={item.image} alt={item.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
                 </div>

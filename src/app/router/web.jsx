@@ -14,7 +14,8 @@ const webRoutes = [
   {path:"/contact",element: <ContactPage/>},
   {path:"/menu",element: <MenuPage/>},
   {path:"/cart",element: <AddToCardPage/>},
-  {path: "/detail" , element: <Design_Detail/>},
+  {path: "/detail", element: <Design_Detail/>},
+  {path: "/detail/:id" , element: <Design_Detail/>},
   {path: "/paymentmethod" , element: <PaymentMethod/>},
   {path: "/paymentsuccess" ,element: <PaymentSuccess/>},
 
